@@ -1,0 +1,31 @@
+{
+  "name": "term-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon --exec ts-node src/backend/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.3",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "prettier-plugin-ejs": "^1.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "lint-staged": {
+    "**/*": "prettier --plugin=prettier-plugin-ejs --write --ignore-unknown"
+  }
+}
