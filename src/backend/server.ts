@@ -1,7 +1,7 @@
-import * as path from "path";
 import express from "express";
-import morgan from "morgan";
 import createHttpError from "http-errors";
+import morgan from "morgan";
+import * as path from "path";
 
 import rootRoutes from "./routes/root";
 import { testRouter } from "./routes/test";
