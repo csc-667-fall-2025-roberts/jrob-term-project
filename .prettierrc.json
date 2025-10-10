@@ -10,5 +10,5 @@
   "endOfLine": "lf",
   "bracketSameLine": false,
   "proseWrap": "preserve",
-  "plugins": ["prettier-plugin-organize-imports"]
+  "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-ejs"]
 }

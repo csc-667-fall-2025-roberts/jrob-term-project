@@ -29,6 +29,6 @@
     "typescript": "^5.9.2"
   },
   "lint-staged": {
-    "**/*": "prettier --plugin=prettier-plugin-ejs --write --ignore-unknown"
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
