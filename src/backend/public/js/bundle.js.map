@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../frontend/entrypoint.ts"],
+  "sourcesContent": ["const button: Element | null = document.querySelector(\"#test-button\");\n\nbutton?.addEventListener(\"click\", (event) => {\n  event.preventDefault();\n\n  setTimeout(() => {\n    alert(\"you clicked around 1 seconds ago\");\n  }, 1000);\n});\n"],
+  "mappings": ";;;AAAA,MAAM,SAAyB,SAAS,cAAc,cAAc;AAEpE,UAAQ,iBAAiB,SAAS,CAAC,UAAU;AAC3C,UAAM,eAAe;AAErB,eAAW,MAAM;AACf,YAAM,kCAAkC;AAAA,IAC1C,GAAG,GAAI;AAAA,EACT,CAAC;",
+  "names": []
+}
