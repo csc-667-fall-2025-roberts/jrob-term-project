@@ -3,9 +3,10 @@ import createHttpError from "http-errors";
 import morgan from "morgan";
 import * as path from "path";
 
+import bodyParser from "body-parser";
 import { configDotenv } from "dotenv";
 import rootRoutes from "./routes/root";
-import { testRouter } from "./routes/test";
+import { userRoutes } from "./routes/users";
 
 configDotenv();
 
@@ -15,6 +16,8 @@ const PORT = process.env.PORT || 3001;
 const isDev = process.env.NODE_ENV !== "production";
 
 app.use(morgan("dev"));
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 // In dev mode, serve from src/backend/public so browser-sync can detect changes
 // In production, serve from dist/public
@@ -31,7 +34,7 @@ app.set("views", viewsDir);
 app.set("view engine", "ejs");
 
 app.use("/", rootRoutes);
-app.use("/test", testRouter);
+app.use("/users", userRoutes);
 
 app.use((_request, _response, next) => {
   next(createHttpError(404));
