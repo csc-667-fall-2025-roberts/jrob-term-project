@@ -11,22 +11,29 @@
     "dev:backend": "nodemon --exec ts-node src/backend/server.ts",
     "dev:live": "browser-sync start --proxy 'http://localhost:3001' --port 3000 --files 'src/backend/**/*.ts' 'src/backend/**/*.ejs' 'src/backend/public/**/*' --reload-delay 1000 --no-ui --no-open",
     "dev": "concurrently --names \"backend,frontend,live\" --prefix-colors \"green,blue,magenta\" \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:live\"",
-    "start:dev": "npm run dev"
+    "start:dev": "npm run dev",
+    "migrate:create": "node-pg-migrate create -j ts -- ",
+    "migrate:up": "node-pg-migrate up",
+    "migrate:down": "node-pg-migrate down"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "http-errors": "^2.0.0",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "node-pg-migrate": "^8.0.3",
+    "pg-promise": "^12.2.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.6.0",
+    "@types/node-pg-migrate": "^2.3.1",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",
     "browser-sync": "^3.0.4",
