@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+  </head>
+  <body>
+    <form action="/auth/signup" method="post">
+      <% if(locals.error !== undefined) { %>
+      <p class="error-message"><%= error %></p>
+      <% } %>
+      <div>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Enter your username" value="<%= locals.username ? username : "" %>" />
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Enter your email" value="<%= locals.email ? email : "" %>"/>
+      </div>
+
+      <div>
+        <label for="password" password>Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter your password" />
+      </div>
+
+      <button type="submit">Sign Up</button>
+    </form>
+    <a href="/auth/login">Log in</a>
+  </body>
+</html>

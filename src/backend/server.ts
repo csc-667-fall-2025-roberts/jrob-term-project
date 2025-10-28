@@ -5,8 +5,7 @@ import * as path from "path";
 
 import bodyParser from "body-parser";
 import { configDotenv } from "dotenv";
-import rootRoutes from "./routes/root";
-import { userRoutes } from "./routes/users";
+import * as routes from "./routes";
 
 configDotenv();
 
@@ -14,6 +13,15 @@ const app = express();
 
 const PORT = process.env.PORT || 3001;
 const isDev = process.env.NODE_ENV !== "production";
+
+app.use((req, res, next) => {
+  if (req.path === "/.well-known/appspecific/com.chrome.devtools.json") {
+    // Respond with a 404 but don't log an error
+    res.status(404).send("Not Found");
+  } else {
+    next(); // Proceed to the next middleware for other requests
+  }
+});
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded());
@@ -33,8 +41,8 @@ const viewsDir = isDev
 app.set("views", viewsDir);
 app.set("view engine", "ejs");
 
-app.use("/", rootRoutes);
-app.use("/users", userRoutes);
+app.use("/", routes.root);
+app.use("/auth", routes.auth);
 
 app.use((_request, _response, next) => {
   next(createHttpError(404));
