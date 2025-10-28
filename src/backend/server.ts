@@ -5,7 +5,9 @@ import * as path from "path";
 
 import bodyParser from "body-parser";
 import { configDotenv } from "dotenv";
+import * as middleware from "./middleware";
 import * as routes from "./routes";
+import { sessionMiddleware } from "./session";
 
 configDotenv();
 
@@ -41,7 +43,10 @@ const viewsDir = isDev
 app.set("views", viewsDir);
 app.set("view engine", "ejs");
 
-app.use("/", routes.root);
+app.use(sessionMiddleware);
+
+app.use("/", middleware.requireGuest, routes.root);
+app.use("/lobby", middleware.requireUser, routes.lobby);
 app.use("/auth", routes.auth);
 
 app.use((_request, _response, next) => {

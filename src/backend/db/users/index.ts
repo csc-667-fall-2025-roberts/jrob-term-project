@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import type { PrivateUser, User } from "../../types/session";
 import db from "../connection";
 import { SIGNUP_SQL } from "./sql";
 
@@ -9,11 +10,7 @@ const signup = async (username: string, email: string, cleartextPassword: string
   try {
     const hash = await bcrypt.hash(cleartextPassword, SALT_ROUNDS);
 
-    return await db.one<{ id: number; username: string; email: string }>(SIGNUP_SQL, [
-      username,
-      email,
-      hash,
-    ]);
+    return await db.one<User>(SIGNUP_SQL, [username, email, hash]);
   } catch {
     throw "Username or email is invalid";
   }
@@ -23,13 +20,7 @@ const LOOKUP_USER = `SELECT * FROM users WHERE email=$1`;
 
 const lookup = async (email: string) => {
   try {
-    return await db.one<{
-      id: number;
-      email: string;
-      username: string;
-      password: string;
-      created_at: Date;
-    }>(LOOKUP_USER, [email]);
+    return await db.one<PrivateUser>(LOOKUP_USER, [email]);
   } catch (e) {
     throw GENERIC_FAILURE_MESSAGE;
   }

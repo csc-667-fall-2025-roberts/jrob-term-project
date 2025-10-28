@@ -23,9 +23,11 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
+    "connect-pg-simple": "^10.0.0",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "express-session": "^1.18.2",
     "http-errors": "^2.0.0",
     "morgan": "^1.10.1",
     "node-pg-migrate": "^8.0.3",
@@ -33,7 +35,9 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
+    "@types/connect-pg-simple": "^7.0.3",
     "@types/express": "^5.0.3",
+    "@types/express-session": "^1.18.2",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.6.0",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
