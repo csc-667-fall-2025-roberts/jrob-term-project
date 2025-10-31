@@ -1,3 +1,5 @@
+import "./styles.css";
+
 const button: Element | null = document.querySelector("#test-button");
 
 button?.addEventListener("click", (event) => {
