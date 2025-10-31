@@ -5,9 +5,10 @@ import * as path from "path";
 
 import bodyParser from "body-parser";
 import { configDotenv } from "dotenv";
+import { sessionMiddleware } from "./config/session";
 import logger from "./lib/logger";
-import rootRoutes from "./routes/root";
-import { userRoutes } from "./routes/users";
+import { requireGuest, requireUser } from "./middleware";
+import * as routes from "./routes";
 
 configDotenv();
 
@@ -16,9 +17,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Filter out browser-generated requests from logs
-app.use(morgan("dev", {
-  skip: (req) => req.url.startsWith("/.well-known/")
-}));
+app.use(
+  morgan("dev", {
+    skip: (req) => req.url.startsWith("/.well-known/"),
+  }),
+);
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
@@ -31,8 +34,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use("/", rootRoutes);
-app.use("/users", userRoutes);
+app.use(sessionMiddleware);
+
+app.use("/", routes.root);
+app.use("/auth", routes.auth);
+app.use("/lobby", requireUser, routes.lobby);
 
 app.use((_request, _response, next) => {
   next(createHttpError(404));

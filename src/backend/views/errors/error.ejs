@@ -4,14 +4,18 @@
     <link rel="stylesheet" href="/js/bundle.css" />
     <script src="/js/bundle.js" defer></script>
     <title>Error <%= status %></title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
-    <h1>Error <%= status %></h1>
+    <h1>
+      Error
+      <%= status %>
+    </h1>
     <p><%= message %></p>
 
     <% if (stack) { %>
-      <h2>Stack Trace</h2>
-      <pre><%= stack %></pre>
+    <h2>Stack Trace</h2>
+    <pre><%= stack %></pre>
     <% } %>
 
     <p><a href="/">Return to home</a></p>
