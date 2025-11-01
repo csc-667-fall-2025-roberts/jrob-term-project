@@ -12,9 +12,29 @@ import * as routes from "./routes";
 
 configDotenv();
 
+// Set up livereload in development
+const isDevelopment = process.env.NODE_ENV !== "production";
+if (isDevelopment) {
+  const livereload = require("livereload");
+
+  const liveReloadServer = livereload.createServer({
+    exts: ["ejs", "css", "js"],
+  });
+  liveReloadServer.watch([
+    path.join(__dirname, "views"),
+    path.join(__dirname, "public"),
+  ]);
+}
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+
+// Inject livereload script in development
+if (isDevelopment) {
+  const connectLivereload = require("connect-livereload");
+  app.use(connectLivereload());
+}
 
 // Filter out browser-generated requests from logs
 app.use(
