@@ -8,3 +8,11 @@ export interface User {
 export interface SecureUser extends User {
   password: string;
 }
+
+export interface ChatMessage {
+  id: number;
+  user_id: number;
+  username: string;
+  message: string;
+  created_at: Date;
+}
