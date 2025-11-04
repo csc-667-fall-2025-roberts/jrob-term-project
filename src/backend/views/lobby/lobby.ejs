@@ -3,8 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Lobby</title>
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script src="/js/io.js" defer></script>
+
+    <style>
+      .disconnected {
+        color: red;
+      }
+
+      .connected {
+        color: green;
+      }
+    </style>
   </head>
   <body>
     <a href="/auth/logout">Logout</a>
@@ -13,5 +26,7 @@
       <%= user.username %>
       (<%= user.id %>)
     </h1>
+
+    <div id="socket-status" class="status disconnected">Socket.io: Disconnected</div>
   </body>
 </html>

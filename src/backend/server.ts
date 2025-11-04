@@ -1,14 +1,16 @@
+import bodyParser from "body-parser";
+import { configDotenv } from "dotenv";
 import express from "express";
+import { createServer } from "http";
 import createHttpError from "http-errors";
 import morgan from "morgan";
 import * as path from "path";
 
-import bodyParser from "body-parser";
-import { configDotenv } from "dotenv";
 import { sessionMiddleware } from "./config/session";
 import logger from "./lib/logger";
-import { requireGuest, requireUser } from "./middleware";
+import { requireUser } from "./middleware";
 import * as routes from "./routes";
+import { initSockets } from "./sockets/init";
 
 configDotenv();
 
@@ -20,13 +22,13 @@ if (isDevelopment) {
   const liveReloadServer = livereload.createServer({
     exts: ["ejs", "css", "js"],
   });
-  liveReloadServer.watch([
-    path.join(__dirname, "views"),
-    path.join(__dirname, "public"),
-  ]);
+  liveReloadServer.watch([path.join(__dirname, "views"), path.join(__dirname, "public")]);
 }
 
 const app = express();
+const httpServer = createServer(app);
+
+app.set("io", initSockets(httpServer));
 
 const PORT = process.env.PORT || 3000;
 
@@ -91,10 +93,10 @@ app.use((err: any, req: express.Request, res: express.Response, _next: express.N
   });
 });
 
-const server = app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   logger.info(`Server started on port ${PORT}`);
 });
 
-server.on("error", (error) => {
+httpServer.on("error", (error) => {
   logger.error("Server error:", error);
 });

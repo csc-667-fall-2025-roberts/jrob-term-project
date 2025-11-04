@@ -1,8 +1,21 @@
-import { defineConfig } from "vite";
+import { glob } from "glob";
 import path from "path";
+import { defineConfig } from "vite";
 
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   const isDev = mode === "development";
+
+  // Find all top-level entry point files in src/frontend
+  const entryPoints = glob.sync("src/frontend/*.ts", {
+    ignore: ["**/*.d.ts"],
+  });
+
+  // Convert to input object with keys based on filename
+  const input: Record<string, string> = {};
+  entryPoints.forEach((file) => {
+    const name = path.basename(file, path.extname(file));
+    input[name] = path.resolve(__dirname, file);
+  });
 
   return {
     // Enable public directory for static assets like favicon
@@ -13,13 +26,13 @@ export default defineConfig(({ command, mode }) => {
       outDir: isDev ? "src/backend/public" : "dist/public",
       emptyOutDir: isDev, // Clear dev folder on rebuild, but not prod (backend also outputs there)
       rollupOptions: {
-        input: path.resolve(__dirname, "src/frontend/entrypoint.ts"),
+        input,
         output: {
-          // Output as a single bundle.js file (matching current setup)
-          entryFileNames: "js/bundle.js",
+          // Output each entry file separately in the js/ directory
+          entryFileNames: "js/[name].js",
           // Output CSS to a fixed filename (no hash)
           assetFileNames: (assetInfo) => {
-            if (assetInfo.name?.endsWith('.css')) {
+            if (assetInfo.name?.endsWith(".css")) {
               return "js/bundle.css";
             }
             return "assets/[name]-[hash][extname]";
@@ -29,7 +42,7 @@ export default defineConfig(({ command, mode }) => {
         },
       },
       // Generate sourcemaps for easier debugging
-      sourcemap: true,
+      sourcemap: isDev,
       // Target modern browsers
       target: "es2020",
     },
