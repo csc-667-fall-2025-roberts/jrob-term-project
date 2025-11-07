@@ -7,7 +7,7 @@
     <title>Lobby</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script src="/js/io.js" defer></script>
+    <script src="/js/chat.js" defer></script>
 
     <style>
       .disconnected {
@@ -27,6 +27,12 @@
       (<%= user.id %>)
     </h1>
 
-    <div id="socket-status" class="status disconnected">Socket.io: Disconnected</div>
+    <div id="chat-area">
+      <div id="message-listing"></div>
+      <div id="message-submit">
+        <input type="text" />
+        <button>Send</button>
+      </div>
+    </div>
   </body>
 </html>
