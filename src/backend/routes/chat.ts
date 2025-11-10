@@ -23,7 +23,7 @@ router.post("/", async (request, response) => {
   const result = await Chat.create(id, message);
 
   const io = request.app.get("io");
-  io.to(GLOBAL_ROOM).emit(CHAT_MESSAGE, { message: result });
+  io.to(GLOBAL_ROOM).emit(CHAT_MESSAGE, result);
 });
 
 export default router;

@@ -7,6 +7,51 @@
     <title>Lobby</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script src="/js/chat.js" defer></script>
+
+    <style>
+      .chat-message {
+        padding: 12px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        background-color: #f5f5f5;
+        max-width: 80%;
+      }
+
+      .message-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4px;
+        font-size: 12px;
+        color: #666;
+      }
+
+      .message-username {
+        font-weight: bold;
+        color: #2196f3;
+      }
+
+      .message-time {
+        font-style: italic;
+      }
+
+      .message-text {
+        font-size: 14px;
+        color: #333;
+        word-wrap: break-word;
+      }
+
+      #message-listing {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 16px;
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 12px;
+      }
+    </style>
   </head>
   <body>
     <a href="/auth/logout">Logout</a>
@@ -15,5 +60,23 @@
       <%= user.username %>
       (<%= user.id %>)
     </h1>
+
+    <div id="chat-area">
+      <div id="message-listing"></div>
+      <div id="message-submit">
+        <input type="text" placeholder="Enter your message" />
+        <button>Send</button>
+      </div>
+    </div>
+
+    <template id="template-chat-message">
+      <div class="chat-message">
+        <div class="message-header">
+          <span class="message-username"></span>
+          <span class="message-time"></span>
+        </div>
+        <span class="message-text"></span>
+      </div>
+    </template>
   </body>
 </html>
