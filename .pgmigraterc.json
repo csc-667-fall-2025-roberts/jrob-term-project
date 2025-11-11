@@ -1,0 +1,5 @@
+{
+  "migrations-dir": "migrations",
+  "migration-file-language": "ts",
+  "ts-node": "tsx"
+}
