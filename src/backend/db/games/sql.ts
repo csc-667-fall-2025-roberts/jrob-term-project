@@ -1,6 +1,6 @@
 export const CREATE_GAME = `
 INSERT INTO games (created_by, name, max_players)
-VALUE ($1, $2, $3)
+VALUES ($1, $2, $3)
 RETURNING *
 `;
 

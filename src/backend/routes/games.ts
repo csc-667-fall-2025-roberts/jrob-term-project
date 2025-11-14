@@ -20,6 +20,8 @@ router.post("/", async (request, response) => {
     const { id } = request.session.user!;
     const { name, max_players } = request.body;
 
+    logger.info(`Create game request: ${name}, ${max_players}`);
+
     const game = await Games.create(id, name, max_players);
     logger.info(
       `User ${id} created game ${game.id} (name: ${game.name}, max_players: ${game.max_players})`,

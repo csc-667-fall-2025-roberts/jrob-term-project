@@ -6,6 +6,7 @@
 
     <title>Lobby</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script src="/js/lobby.js" defer></script>
     <script src="/js/chat.js" defer></script>
 
     <style>
@@ -61,6 +62,20 @@
       (<%= user.id %>)
     </h1>
 
+    <h2>Available Games</h2>
+
+    <form method="post" action="/games">
+      <label for="name">Name</label>
+      <input type="text" name="name" placeholder="Name of your game" />
+
+      <label for="max_players">Max Players (defaults to 4)</label>
+      <input type="number" name="max_players" placeholder="Enter max players" />
+
+      <button type="submit">Create Game</button>
+    </form>
+
+    <div id="game-list"></div>
+
     <div id="chat-area">
       <div id="message-listing"></div>
       <div id="message-submit">
@@ -76,6 +91,17 @@
           <span class="message-time"></span>
         </div>
         <span class="message-text"></span>
+      </div>
+    </template>
+
+    <template id="game-listing-template">
+      <div class="game-item">
+        <span class="game-id"></span>
+        <span class="game-name"></span>
+        <span class="game-created-by"></span>
+        <span class="game-state"></span>
+        <span class="game-max-players"></span>
+        <span class="game-created-at"></span>
       </div>
     </template>
   </body>

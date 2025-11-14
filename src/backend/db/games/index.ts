@@ -2,7 +2,7 @@ import { Game, GameState } from "../../types/types";
 import db from "../connection";
 import { CREATE_GAME, GAMES_BY_USER, JOIN_GAME, LIST_GAMES } from "./sql";
 
-const create = async (user_id: number, name?: string, maxPlayers?: number) =>
+const create = async (user_id: number, name?: string, maxPlayers: number = 4) =>
   await db.one<Game>(CREATE_GAME, [user_id, name, maxPlayers]);
 
 const join = async (game_id: number, user_id: number) =>

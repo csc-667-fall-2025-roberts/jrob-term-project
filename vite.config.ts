@@ -16,6 +16,7 @@ export default defineConfig(({ command, mode }) => {
         input: {
           main: path.resolve(__dirname, "src/frontend/entrypoint.ts"),
           chat: path.resolve(__dirname, "src/frontend/chat.ts"),
+          lobby: path.resolve(__dirname, "src/frontend/lobby.ts"),
         },
         output: {
           // Output as a single bundle.js file (matching current setup)
