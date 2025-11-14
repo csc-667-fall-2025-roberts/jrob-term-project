@@ -20,6 +20,9 @@ export default defineConfig(({ command, mode }) => {
           lobby: path.resolve(__dirname, "src/frontend/lobby.ts"),
         },
         output: {
+          // Output as ES modules (requires type="module" in script tags)
+          // This is the modern approach and allows for multiple entry points
+          format: "es",
           // Output as a single bundle.js file (matching current setup)
           entryFileNames: "[name].js",
           dir: `${outDir}/js`,

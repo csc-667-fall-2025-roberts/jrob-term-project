@@ -4,7 +4,7 @@ const gameListing = document.querySelector<HTMLDivElement>("#game-list")!;
 const gameItemTemplate = document.querySelector<HTMLTemplateElement>("#game-listing-template")!;
 
 export const loadGames = () => {
-  setTimeout(() => fetch("/games", { credentials: "include" }), 5);
+  fetch("/games", { credentials: "include" });
 };
 
 const createGameElement = (game: Game) => {

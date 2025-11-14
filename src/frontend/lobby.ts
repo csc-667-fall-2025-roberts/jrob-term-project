@@ -17,4 +17,8 @@ socket.on(EVENTS.GAME_CREATE, (game: Game) => {
   appendGame(game);
 });
 
-loadGames();
+// Wait for socket connection before loading games to avoid race condition
+socket.on("connect", () => {
+  console.log("Socket connected, loading games...");
+  loadGames();
+});

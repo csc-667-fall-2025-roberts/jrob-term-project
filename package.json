@@ -12,8 +12,8 @@
     "dev": "concurrently --names \"backend,frontend\" --prefix-colors \"green,blue\" \"npm run dev:backend\" \"npm run dev:frontend\"",
     "start:dev": "npm run dev",
     "migrate:create": "node-pg-migrate create -j ts -- ",
-    "migrate:up": "NODE_OPTION='--import tsx' node-pg-migrate up",
-    "migrate:down": "NODE_OPTION='--import tsx' node-pg-migrate down"
+    "migrate:up": "NODE_OPTIONS='--import tsx' node-pg-migrate up",
+    "migrate:down": "NODE_OPTIONS='--import tsx' node-pg-migrate down"
   },
   "keywords": [],
   "author": "",
