@@ -1,5 +1,5 @@
 import express from "express";
-import { CHAT_LISTING, CHAT_MESSAGE, GLOBAL_ROOM } from "../../shared/chat-keys";
+import { CHAT_LISTING, CHAT_MESSAGE, GLOBAL_ROOM } from "../../shared/keys";
 import { Chat } from "../db";
 
 const router = express.Router();

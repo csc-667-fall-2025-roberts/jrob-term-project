@@ -1,6 +1,6 @@
 import { Game, GameState } from "../../../types/types";
 import db from "../connection";
-import { CREATE_GAME, GAMES_BY_USER, JOIN_GAME, LIST_GAMES } from "./sql";
+import { CREATE_GAME, GAME_BY_ID, GAMES_BY_USER, JOIN_GAME, LIST_GAMES } from "./sql";
 
 const create = async (user_id: number, name?: string, maxPlayers: number = 4) =>
   await db.one<Game>(CREATE_GAME, [user_id, name, maxPlayers]);
@@ -13,4 +13,6 @@ const list = async (state: GameState = GameState.LOBBY, limit: number = 50) =>
 
 const getByUser = async (user_id: number) => await db.manyOrNone<Game>(GAMES_BY_USER, [user_id]);
 
-export { create, getByUser, join, list };
+const get = async (game_id: number) => await db.one<Game>(GAME_BY_ID, [game_id]);
+
+export { create, get, getByUser, join, list };

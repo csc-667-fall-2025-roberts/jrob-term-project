@@ -35,4 +35,8 @@ LIMIT $2
 export const GAMES_BY_USER = `
 SELECT games.* FROM game_players, games
 WHERE game_players.game_id=games.id AND user_id=$1
-`
+`;
+
+export const GAME_BY_ID = `
+  SELECT * FROM games WHERE id=$1
+`;
