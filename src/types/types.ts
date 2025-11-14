@@ -26,3 +26,12 @@ export enum GameState {
   ACTIVE = "active",
   COMPLETED = "completed",
 }
+
+export type Game = {
+  id: number;
+  name?: string;
+  created_by: number;
+  state: GameState;
+  max_players: number;
+  created_at: Date;
+};
