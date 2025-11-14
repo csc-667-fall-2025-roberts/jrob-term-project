@@ -20,3 +20,9 @@ export interface ChatMessage extends DbChatMessage {
   username: string;
   email: string;
 }
+
+export enum GameState {
+  LOBBY = "lobby",
+  ACTIVE = "active",
+  COMPLETED = "completed",
+}

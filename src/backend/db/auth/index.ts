@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import type { SecureUser, User } from "../../types/types";
+import type { SecureUser, User } from "../../../types/types";
 import db from "../connection";
 import { LOGIN, SIGNUP } from "./sql";
 

@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",
+    "moduleResolution": "node",
     "paths": {
       "*": ["./types/*.d.ts"]
     },
@@ -11,5 +12,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/backend/**/*"]
+  "include": ["src/backend/**/*", "src/shared/types.d.ts", "src/types"]
 }

@@ -1,4 +1,4 @@
-import { ChatMessage } from "../../types/types";
+import { ChatMessage } from "../../../types/types";
 import db from "../connection";
 import { CREATE_MESSAGE, RECENT_MESSAGES } from "./sql";
 

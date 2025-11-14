@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig(({ command, mode }) => {
   const isDev = mode === "development";
+  const outDir = isDev ? "src/backend/public" : "dist/backend/public";
 
   return {
     // Enable public directory for static assets like favicon
@@ -10,7 +11,7 @@ export default defineConfig(({ command, mode }) => {
 
     build: {
       // Dev outputs to src/backend/public, production to dist/public
-      outDir: isDev ? "src/backend/public" : "dist/public",
+      outDir,
       emptyOutDir: isDev, // Clear dev folder on rebuild, but not prod (backend also outputs there)
       rollupOptions: {
         input: {
@@ -20,11 +21,11 @@ export default defineConfig(({ command, mode }) => {
         output: {
           // Output as a single bundle.js file (matching current setup)
           entryFileNames: "[name].js",
-          dir: "src/backend/public/js",
+          dir: `${outDir}/js`,
           // Output CSS to a fixed filename (no hash)
           assetFileNames: (assetInfo) => {
             if (assetInfo.name?.endsWith(".css")) {
-              return "js/bundle.css";
+              return "bundle.css";
             }
             return "assets/[name]-[hash][extname]";
           },

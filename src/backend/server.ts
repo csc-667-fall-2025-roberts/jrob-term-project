@@ -28,6 +28,8 @@ if (isDevelopment) {
 const app = express();
 const httpServer = createServer(app);
 
+app.set("trust proxy", 1);
+
 app.set("io", initSockets(httpServer));
 
 const PORT = process.env.PORT || 3000;
