@@ -12,8 +12,8 @@
     "dev": "concurrently --names \"backend,frontend\" --prefix-colors \"green,blue\" \"npm run dev:backend\" \"npm run dev:frontend\"",
     "start:dev": "npm run dev",
     "migrate:create": "node-pg-migrate create -j ts -- ",
-    "migrate:up": "node-pg-migrate up",
-    "migrate:down": "node-pg-migrate down"
+    "migrate:up": "NODE_OPTIONS='--import tsx' node-pg-migrate up",
+    "migrate:down": "NODE_OPTIONS='--import tsx' node-pg-migrate down"
   },
   "keywords": [],
   "author": "",
@@ -40,7 +40,8 @@
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
     "winston": "^3.18.3"
   },
   "devDependencies": {
@@ -64,8 +65,7 @@
     "prettier-plugin-ejs": "^1.0.3",
     "prettier-plugin-organize-imports": "^4.3.0",
     "tailwindcss": "^3.4.18",
-    "ts-node": "^10.9.2",
-    "vite": "^7.1.12"
+    "ts-node": "^10.9.2"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

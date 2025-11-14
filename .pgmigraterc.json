@@ -1,5 +1,7 @@
 {
   "migrations-dir": "migrations",
   "migration-file-language": "ts",
+  "tsconfig": "tsconfig.json",
+  "migration-file-extension": ".ts",
   "ts-node": "tsx"
 }
