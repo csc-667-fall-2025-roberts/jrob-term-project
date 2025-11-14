@@ -4,7 +4,7 @@ import { GLOBAL_ROOM } from "../../shared/keys";
 import { sessionMiddleware } from "../config/session";
 import { Games } from "../db";
 import logger from "../lib/logger";
-import { User } from "../types/types";
+import { User } from "../../shared/types";
 
 export const initSockets = (httpServer: HTTPServer) => {
   const io = new Server(httpServer);

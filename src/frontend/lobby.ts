@@ -1,5 +1,5 @@
 import socketIo from "socket.io-client";
-import type { Game } from "../backend/types/types";
+import type { Game } from "../shared/types";
 import * as EVENTS from "../shared/keys";
 import { loadGames } from "./lobby/load-games";
 

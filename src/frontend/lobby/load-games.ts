@@ -1,4 +1,4 @@
-import { Game } from "../../backend/types/types";
+import { Game } from "../../shared/types";
 
 const listingDiv = document.querySelector<HTMLDivElement>("#game-list")!;
 const gameTemplate = document.querySelector<HTMLTemplateElement>("#game-listing-template")!;
