@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const src = path.join(__dirname, '..', 'src', 'backend', 'views');
-const dest = path.join(__dirname, '..', 'dist', 'views');
+const dest = path.join(__dirname, '..', 'dist', 'backend', 'views');
 
 function copyDir(src, dest) {
   // Create destination directory if it doesn't exist
