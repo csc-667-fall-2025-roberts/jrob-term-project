@@ -14,7 +14,7 @@ router.get("/", async (request, response) => {
   const games = await Games.list();
   const io = request.app.get("io") as Server;
 
-  io.to(sessionId).emit(GAME_LISTING, { games });
+  io.to(sessionId).emit(GAME_LISTING, games);
 });
 
 router.post("/", async (request, response) => {

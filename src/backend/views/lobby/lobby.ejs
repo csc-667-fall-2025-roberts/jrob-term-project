@@ -6,52 +6,8 @@
 
     <title>Lobby</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script src="/js/chat.js" defer></script>
-
-    <style>
-      .chat-message {
-        padding: 12px;
-        margin-bottom: 8px;
-        border-radius: 8px;
-        background-color: #f5f5f5;
-        max-width: 80%;
-      }
-
-      .message-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 4px;
-        font-size: 12px;
-        color: #666;
-      }
-
-      .message-username {
-        font-weight: bold;
-        color: #2196f3;
-      }
-
-      .message-time {
-        font-style: italic;
-      }
-
-      .message-text {
-        font-size: 14px;
-        color: #333;
-        word-wrap: break-word;
-      }
-
-      #message-listing {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding: 16px;
-        max-height: 400px;
-        overflow-y: auto;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        margin-bottom: 12px;
-      }
-    </style>
+    <script src="/js/chat.js" type="module" defer></script>
+    <script src="/js/lobby.js" type="module" defer></script>
   </head>
   <body>
     <a href="/auth/logout">Logout</a>
@@ -60,6 +16,18 @@
       <%= user.username %>
       (<%= user.id %>)
     </h1>
+
+    <form method="post" action="/games">
+      <label for="name">Name</label>
+      <input type="text" name="name" placeholder="Optional game name" />
+
+      <label for="max_players">Max Players</label>
+      <input type="number" name="max_players" placeholder="Optional max players (default 4)" />
+
+      <button type="submit">Create Game</button>
+    </form>
+
+    <div id="game-list"></div>
 
     <div id="chat-area">
       <div id="message-listing"></div>
@@ -76,6 +44,17 @@
           <span class="message-time"></span>
         </div>
         <span class="message-text"></span>
+      </div>
+    </template>
+
+    <template id="game-listing-template">
+      <div class="game-item">
+        <span class="game-id"></span>
+        <span class="game-name"></span>
+        <span class="game-created-by"></span>
+        <span class="game-state"></span>
+        <span class="max-players"></span>
+        <span class="created-at"></span>
       </div>
     </template>
   </body>

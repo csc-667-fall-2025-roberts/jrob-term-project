@@ -28,7 +28,7 @@ LEFT JOIN game_players gp ON g.id=gp.game_id
 LEFT JOIN users u ON u.id=gp.user_id
 WHERE g.state=$1
 GROUP BY g.id
-ORDER BY g.create_at DESC
+ORDER BY g.created_at DESC
 LIMIT $2
 `;
 
