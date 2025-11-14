@@ -28,6 +28,9 @@ if (isDevelopment) {
 const app = express();
 const httpServer = createServer(app);
 
+// Trust proxy - required for secure cookies when behind Render's proxy
+app.set("trust proxy", 1);
+
 app.set("io", initSockets(httpServer));
 
 const PORT = process.env.PORT || 3000;
