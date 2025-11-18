@@ -23,14 +23,17 @@ export default defineConfig(({ command, mode }) => {
           // Output as ES modules (requires type="module" in script tags)
           // This is the modern approach and allows for multiple entry points
           format: "es",
-          // Output as a single bundle.js file (matching current setup)
-          entryFileNames: "[name].js",
-          dir: `${outDir}/js`,
-          // Output CSS to a fixed filename (no hash)
+          // Output to root of outDir (public/)
+          dir: outDir,
+          // JS files go in js/ subdirectory
+          entryFileNames: "js/[name].js",
+          // Assets organized by type
           assetFileNames: (assetInfo) => {
+            // CSS files go in css/ subdirectory
             if (assetInfo.name?.endsWith(".css")) {
-              return "bundle.css";
+              return "css/bundle.css";
             }
+            // Other assets go in assets/ subdirectory
             return "assets/[name]-[hash][extname]";
           },
           // Disable code splitting for simplicity
