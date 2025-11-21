@@ -6,34 +6,57 @@
 
     <title>Lobby</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/css/bundle.css" />
     <script type="module" src="/js/chat.js" defer></script>
     <script type="module" src="/js/lobby.js" defer></script>
   </head>
   <body>
-    <a href="/auth/logout">Logout</a>
-    <h1>
-      Hello
-      <%= user.username %>
-      (<%= user.id %>)
-    </h1>
+    <div class="header card">
+      <h1>
+        Hello
+        <%= user.username %>
+        (<%= user.id %>)
+      </h1>
+      <a href="/auth/logout" class="btn-link">Logout</a>
+    </div>
 
-    <form method="post" action="/games">
-      <label for="name">Name</label>
-      <input type="text" name="name" placeholder="Optional game name" />
+    <div class="lobby-container">
+      <div class="lobby-game-section">
+        <!-- Create game form -->
+        <div class="form-card card">
+          <h2>Create New Game</h2>
+          <form method="post" action="/games">
+            <div class="form-group">
+              <label for="name">Game Name</label>
+              <input type="text" name="name" placeholder="Optional game name" />
+            </div>
 
-      <label for="max_players">Max Players</label>
-      <input type="number" name="max_players" placeholder="Optional max players (default 4)" />
+            <div class="form-group">
+              <label for="max_players">Max Players</label>
+              <input type="number" name="max_players" value="4" min="2" max="8" />
+            </div>
 
-      <button type="submit">Create Game</button>
-    </form>
+            <button type="submit" class="btn-primary">Create Game</button>
+          </form>
+        </div>
 
-    <div id="game-list"></div>
+        <!-- Game list -->
+        <div class="section card">
+          <h2>Available Games</h2>
+          <div id="game-list" class="game-list"></div>
+        </div>
+      </div>
 
-    <div id="chat-area">
-      <div id="message-listing"></div>
-      <div id="message-submit">
-        <input type="text" placeholder="Enter your message" />
-        <button>Send</button>
+      <!-- Chat -->
+      <div class="chat-container card">
+        <h2>Lobby Chat</h2>
+        <div id="chat-area">
+          <div id="message-listing" class="message-listing"></div>
+          <div id="message-submit" class="message-submit">
+            <input type="text" placeholder="Enter your message" />
+            <button class="btn-primary">Send</button>
+          </div>
+        </div>
       </div>
     </div>
 
