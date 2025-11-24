@@ -18,10 +18,7 @@ const createGameElement = (game: Game) => {
   stateElement.dataset.state = game.state;
 
   gameItem.querySelector(".max-players")!.textContent = `${game.max_players} players`;
-
-  // Join button functionality
-  const joinLink = gameItem.querySelector(".game-join-link") as HTMLAnchorElement;
-  joinLink.href = `/games/${game.id}/join`;
+  gameItem.querySelector("form")!.action = `/games/${game.id}/join`;
 
   return gameItem;
 };

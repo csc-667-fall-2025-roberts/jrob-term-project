@@ -6,14 +6,10 @@ import { appendGame, loadGames, renderGames } from "./lobby/load-games";
 const socket = socketIo();
 
 socket.on(EVENTS.GAME_LISTING, (games: Game[]) => {
-  console.log(EVENTS.GAME_LISTING, games);
-
   renderGames(games);
 });
 
 socket.on(EVENTS.GAME_CREATE, (game: Game) => {
-  console.log(EVENTS.GAME_CREATE, game);
-
   appendGame(game);
 });
 
