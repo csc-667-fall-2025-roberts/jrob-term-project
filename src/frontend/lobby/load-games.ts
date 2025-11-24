@@ -8,16 +8,20 @@ export const loadGames = () => {
 };
 
 const createGameElement = (game: Game) => {
-  const gameItem = gameItemTemplate.content.cloneNode(true) as HTMLDivElement;
+  const gameItem = gameItemTemplate.content.cloneNode(true) as DocumentFragment;
 
-  gameItem.querySelector(".game-id")!.textContent = `${game.id}`;
   gameItem.querySelector(".game-name")!.textContent = game.name ?? `Game ${game.id}`;
-  gameItem.querySelector(".game-created-by")!.textContent = `${game.created_by}`;
-  gameItem.querySelector(".game-state")!.textContent = game.state;
-  gameItem.querySelector(".max-players")!.textContent = `${game.max_players}`;
-  gameItem.querySelector(".created-at")!.textContent = new Date(
-    game.created_at,
-  ).toLocaleDateString();
+
+  // Add data attribute for color coding
+  const stateElement = gameItem.querySelector(".game-state") as HTMLElement;
+  stateElement.textContent = game.state;
+  stateElement.dataset.state = game.state;
+
+  gameItem.querySelector(".max-players")!.textContent = `${game.max_players} players`;
+
+  // Join button functionality
+  const joinLink = gameItem.querySelector(".game-join-link") as HTMLAnchorElement;
+  joinLink.href = `/games/${game.id}/join`;
 
   return gameItem;
 };

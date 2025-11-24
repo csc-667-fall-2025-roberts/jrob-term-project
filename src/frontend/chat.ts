@@ -12,20 +12,22 @@ const messageTemplate = document.querySelector<HTMLTemplateElement>("#template-c
 const appendMessage = ({ username, created_at, message }: ChatMessage) => {
   const clone = messageTemplate.content.cloneNode(true) as DocumentFragment;
 
-  const timeSpan = clone.querySelector(".message-time");
+  const timeSpan = clone.querySelector(".message-time") as HTMLElement;
   const time = new Date(created_at);
-  timeSpan!.textContent = time.toLocaleDateString();
-  console.log(time, timeSpan);
+  timeSpan!.textContent = formatTimeAgo(time);
+  // @ts-ignore
+  timeSpan!.dataset.timestamp = created_at;
 
   const usernameSpan = clone.querySelector(".message-username");
   usernameSpan!.textContent = username;
-  console.log(username, usernameSpan);
 
   const msgSpan = clone.querySelector(".message-text");
   msgSpan!.textContent = message;
-  console.log(message, msgSpan);
 
   listing.appendChild(clone);
+
+  // Auto-scroll to bottom
+  listing.scrollTop = listing.scrollHeight;
 };
 
 socket.on(chatKeys.CHAT_LISTING, ({ messages }: { messages: ChatMessage[] }) => {
@@ -78,3 +80,33 @@ fetch("/chat/", {
   method: "get",
   credentials: "include",
 });
+
+const formatTimeAgo = (date: Date): string => {
+  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+
+  if (seconds < 10) return "just now";
+  if (seconds < 60) return `${seconds}s ago`;
+
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d ago`;
+
+  return date.toLocaleDateString();
+};
+
+const updateAllTimestamps = () => {
+  const timeElements = listing.querySelectorAll<HTMLElement>(".message-time");
+  timeElements.forEach((element) => {
+    const timestamp = element.dataset.timestamp;
+    if (timestamp) {
+      element.textContent = formatTimeAgo(new Date(timestamp));
+    }
+  });
+};
+
+setInterval(updateAllTimestamps, 10000);

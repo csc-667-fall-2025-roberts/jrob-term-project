@@ -1,3 +1,254 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Warm neutral colors */
+  --color-background: #ddd; /* Warm beige */
+  --color-surface: #faf8f5; /* Off-white */
+  --color-border: #e0dcd7;
+
+  /* Text colors */
+  --color-text-primary: #2d2a26;
+  --color-text-secondary: #6b6560;
+  --color-text-muted: #948f8a;
+
+  /* Accent colors */
+  --color-primary: #3b82f6; /* Blue */
+  --color-primary-hover: #2563eb;
+  --color-success: #10b981; /* Green */
+  --color-warning: #f59e0b; /* Amber */
+  --color-info: #8b5cf6; /* Purple */
+
+  /* Game state colors */
+  --state-lobby-bg: #fef3c7;
+  --state-lobby-text: #92400e;
+  --state-active-bg: #d1fae5;
+  --state-active-text: #065f46;
+  --state-completed-bg: #e0e7ff;
+  --state-completed-text: #3730a3;
+
+  /* Spacing - compact */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 0.75rem; /* 12px */
+  --spacing-lg: 1rem; /* 16px */
+
+  /* Other */
+  --border-radius: 0.25rem;
+  --card-shadow: 0 1px 3px rgba(45, 42, 38, 0.08);
+  --transition: 0.2s;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--color-background);
+  padding: var(--spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 1.4;
+  font-size: 0.9rem;
+}
+
+.card {
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+h2 {
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.btn-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  transition: background var(--transition);
+}
+
+.btn-link:hover {
+  background: var(--color-background);
+}
+
+/* Buttons - primary style */
+.btn-primary {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background var(--transition);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+/* Forms */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-group label {
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.form-group input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+}
+
+/* Lobby layout - two columns */
+.lobby-container {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.lobby-game-section {
+  flex: 2; /* Games get more space */
+}
+
+/* Game List */
+#game-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.game-item {
+  padding: var(--spacing-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all var(--transition);
+}
+
+.game-item:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.1);
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.game-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+}
+
+.game-meta {
+  display: flex;
+  gap: var(--spacing-sm);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.game-state {
+  padding: 2px var(--spacing-xs);
+  background: var(--color-background);
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Chat */
+#chat-area {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.message-listing {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-sm);
+  background: var(--color-background);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  margin-bottom: var(--spacing-sm);
+}
+
+.message-submit {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.message-submit input {
+  flex: 1;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+}
+
+.chat-message {
+  padding: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  border-left: 2px solid var(--color-info);
+  font-size: 0.8rem;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+  font-size: 0.75rem;
+}
+
+.message-username {
+  font-weight: 600;
+  color: var(--color-info);
+}
+
+.message-time {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+}
+
+.message-text {
+  display: block;
+  color: var(--color-text-secondary);
+  line-height: 1.3;
+}
