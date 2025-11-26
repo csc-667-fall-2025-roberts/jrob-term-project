@@ -1,23 +1,30 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error <%= status %> - Go Fish</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="/js/bundle.css" />
-    <script src="/js/bundle.js" defer></script>
-    <title>Error <%= status %></title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/css/bundle.css" />
   </head>
   <body>
-    <h1>
-      Error
-      <%= status %>
-    </h1>
-    <p><%= message %></p>
+    <div class="error-container">
+      <div class="error-card">
+        <h1>
+          Error <%= status %>
+        </h1>
+        <p><%= message %></p>
 
-    <% if (stack) { %>
-    <h2>Stack Trace</h2>
-    <pre><%= stack %></pre>
-    <% } %>
+        <% if (stack) { %>
+        <h2>Stack Trace</h2>
+        <pre><%= stack %></pre>
+        <% } %>
 
-    <p><a href="/">Return to home</a></p>
+        <div class="error-actions">
+          <a href="/" class="btn-primary">Return to Home</a>
+          <a href="/lobby" class="btn-secondary">Go to Lobby</a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -1,0 +1,48 @@
+/* ==================== CSS VARIABLES ==================== */
+:root {
+  /* Colors */
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+
+  /* Neutral colors - warm beige theme */
+  --color-background: #f5f1e8;
+  --color-surface: #faf8f3;
+  --color-border: #e8e3d6;
+
+  /* Text colors */
+  --color-text-primary: #2c2415;
+  --color-text-secondary: #5c5444;
+  --color-text-muted: #8b8375;
+
+  /* State colors */
+  --state-active-bg: rgba(34, 197, 94, 0.1);
+
+  /* Spacing scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Border radius */
+  --border-radius: 8px;
+
+  /* Shadows */
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --transition: 0.2s ease-in-out;
+
+  /* Player colors for book tracking */
+  --player-1-color: #3b82f6; /* Blue */
+  --player-2-color: #ef4444; /* Red */
+  --player-3-color: #10b981; /* Green */
+  --player-4-color: #f59e0b; /* Amber */
+  --player-5-color: #8b5cf6; /* Purple */
+  --player-6-color: #ec4899; /* Pink */
+  --player-7-color: #06b6d4; /* Cyan */
+  --player-8-color: #84cc16; /* Lime */
+}

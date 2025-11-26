@@ -3,24 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Log In</title>
+    <title>Log In - Go Fish</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/css/bundle.css" />
   </head>
   <body>
-    <form method="post" action="/auth/login">
-      <% if(locals.error) { %>
-      <p><%= locals.error %></p>
-      <% } %>
+    <div class="auth-container">
+      <div class="auth-card">
+        <h1>
+          <span class="fish-logo">🐟</span>
+          Log In
+        </h1>
 
-      <label for="username">Username:</label>
-      <input type="text" name="username" />
+        <% if(locals.error) { %>
+        <div class="error-message">
+          <%= locals.error %>
+        </div>
+        <% } %>
 
-      <label for="password">Password:</label>
-      <input type="password" name="password" />
+        <form method="post" action="/auth/login">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required />
+          </div>
 
-      <button type="submit">Login</button>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required />
+          </div>
 
-      <a href="/auth/signup">Create an account</a>
-    </form>
+          <button type="submit" class="btn-primary">Log In</button>
+
+          <div class="form-footer">
+            Don't have an account? <a href="/auth/signup">Create one</a>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

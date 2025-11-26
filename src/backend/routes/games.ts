@@ -8,13 +8,21 @@ const router = express.Router();
 
 router.get("/", async (request, response) => {
   const sessionId = request.session.id;
+  const userId = request.session.user!.id;
 
   response.status(202).send();
 
-  const games = await Games.list();
+  const allGames = await Games.list();
+  const userGames = await Games.getByUser(userId);
+
+  // Separate games into user's games and available games
+  const userGameIds = new Set(userGames.map(g => g.id));
+  const myGames = allGames.filter(g => userGameIds.has(g.id));
+  const availableGames = allGames.filter(g => !userGameIds.has(g.id));
+
   const io = request.app.get("io") as Server;
 
-  io.to(sessionId).emit(GAME_LISTING, games);
+  io.to(sessionId).emit(GAME_LISTING, { myGames, availableGames });
 });
 
 router.post("/", async (request, response) => {

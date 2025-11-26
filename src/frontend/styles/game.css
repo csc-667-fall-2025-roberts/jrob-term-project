@@ -1,0 +1,273 @@
+/* ==================== GAME PAGE LAYOUT ==================== */
+
+.game-container {
+  padding: var(--spacing-md);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+  padding: 6px var(--spacing-md); /* Minimal vertical padding */
+}
+
+.game-header h1 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 1.25rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.game-meta-info {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+  margin-left: var(--spacing-xs);
+}
+
+/* Main game layout - 2/3 game board, 1/3 chat */
+.game-layout {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: stretch;
+}
+
+.game-main {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* ==================== OPPONENTS AREA ==================== */
+
+.opponents-area {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.opponent-card {
+  background: var(--color-surface);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  flex: 1;
+  min-width: 120px;
+  border: 2px solid transparent; /* Reserve space for border to prevent shift */
+  position: relative;
+}
+
+.opponent-card h3 {
+  font-size: 0.8rem;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text-primary);
+}
+
+.opponent-stats {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+/* Clickable opponent state */
+.opponent-card.clickable {
+  cursor: pointer;
+  transition: all var(--transition);
+  overflow: hidden; /* For shimmer effect */
+}
+
+.opponent-card.clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(251, 191, 36, 0.2);
+  border: 2px solid #f59e0b; /* Amber border to match selected cards */
+}
+
+.opponent-card.clickable::after {
+  content: "Ask →";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #f59e0b; /* Amber for consistency */
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+
+.opponent-card.clickable:hover::after {
+  opacity: 1;
+}
+
+/* Active turn highlight */
+.opponent-card.active-turn {
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+  animation: activeGlow 2s ease-in-out infinite;
+}
+
+/* ==================== CENTER GAME AREA ==================== */
+
+.center-game-area {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Deck section */
+.deck-section {
+  text-align: center;
+}
+
+.deck-section h3 {
+  font-size: 0.875rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-secondary);
+}
+
+.deck-pile {
+  margin-bottom: var(--spacing-xs);
+}
+
+.deck-count {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* All books section */
+.all-books-section {
+  flex: 1;
+}
+
+.all-books-section h3 {
+  font-size: 0.875rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-secondary);
+}
+
+.books-list {
+  display: grid;
+  grid-template-columns: repeat(7, auto); /* Auto-size columns to content */
+  gap: 6px;
+  justify-content: center; /* Center the grid itself */
+}
+
+/* ==================== PLAYER AREA ==================== */
+
+.player-area {
+  padding: var(--spacing-md);
+}
+
+.player-area h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  font-size: 1rem;
+}
+
+.player-hand {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Active turn on player */
+.player-area.active-turn {
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+  animation: activeGlow 2s ease-in-out infinite;
+}
+
+/* ==================== BOOK BADGES ==================== */
+
+.book-badge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 0.75rem;
+  min-width: 28px;
+  text-align: center;
+  display: inline-flex; /* Use flex for better alignment */
+  align-items: center;
+  justify-content: center;
+  line-height: 1; /* Consistent line height */
+}
+
+.book-badge.completed {
+  color: white;
+}
+
+/* Player color coding */
+.book-badge.player-1 { background: var(--player-1-color); }
+.book-badge.player-2 { background: var(--player-2-color); }
+.book-badge.player-3 { background: var(--player-3-color); }
+.book-badge.player-4 { background: var(--player-4-color); }
+.book-badge.player-5 { background: var(--player-5-color); }
+.book-badge.player-6 { background: var(--player-6-color); }
+.book-badge.player-7 { background: var(--player-7-color); }
+.book-badge.player-8 { background: var(--player-8-color); }
+
+/* Placeholder books */
+.book-badge.placeholder {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 2px dotted var(--color-border);
+  opacity: 0.5;
+}
+
+/* Book celebration animations */
+.book-badge.celebrating {
+  animation: celebrateBook 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.book-badge.flash {
+  animation: flash 0.5s ease-in-out 3;
+}
+
+/* ==================== TURN INDICATOR ==================== */
+
+.turn-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.75rem;
+  color: var(--color-success);
+  font-weight: 600;
+  background: var(--state-active-bg);
+  padding: 2px var(--spacing-xs);
+  border-radius: var(--border-radius);
+  margin-left: var(--spacing-sm);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.turn-indicator::before {
+  content: "▶";
+  font-size: 0.6rem;
+}
+
+/* ==================== CONFETTI EFFECT ==================== */
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #fbbf24;
+  position: absolute;
+  animation: confetti-fall 3s ease-out forwards;
+}
+
+.confetti:nth-child(2n) { background: #3b82f6; }
+.confetti:nth-child(3n) { background: #ef4444; }
+.confetti:nth-child(4n) { background: #10b981; }
+.confetti:nth-child(5n) { background: #8b5cf6; }

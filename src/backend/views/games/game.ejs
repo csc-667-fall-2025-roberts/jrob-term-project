@@ -3,31 +3,172 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game <%= id %> - Go Fish</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Game <%= id %></title>
+    <link rel="stylesheet" href="/css/bundle.css" />
+    <script type="module" src="/js/game.js" defer></script>
+    <script type="module" src="/js/dev-menu.js" defer></script> <!-- DEV ONLY -->
   </head>
   <body>
-    <h1>
-      Welcome to game
-      <%= id %>
-    </h1>
-    <p>
-      <%= name %> with max players <%= max_players %>, created at <%= (new
-      Date(created_at)).toLocaleDateString() %> by <%= created_by %>
-    </p>
+    <div class="game-container">
+      <!-- Header -->
+      <div class="game-header card">
+        <h1>
+          <span class="fish-logo">🐟</span>
+          <%= name || `Game ${id}` %>
+          <span class="game-meta-info">
+            • Created <%= (new Date(created_at)).toLocaleDateString() %> • <%= max_players %> players
+          </span>
+        </h1>
+        <a href="/lobby" class="btn-link">← Back to Lobby</a>
+      </div>
 
-    <div id="game-area">
-      <div id="discard-pile">
-        <div class="card blue two"></div>
+      <!-- Main Game Layout: Game Board + Chat -->
+      <div class="game-layout">
+        <!-- Left: Game Board -->
+        <div class="game-main">
+          <!-- Opponents (Compact Horizontal) -->
+          <div class="opponents-area">
+            <div class="opponent-card">
+              <h3><span class="book-badge completed player-2">●</span> Player 2</h3>
+              <div class="opponent-hand">
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+              </div>
+              <div class="opponent-stats">5 cards • 0 books</div>
+            </div>
+
+            <div class="opponent-card">
+              <h3><span class="book-badge completed player-3">●</span> Player 3</h3>
+              <div class="opponent-hand">
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+              </div>
+              <div class="opponent-stats">3 cards • 1 book</div>
+            </div>
+
+            <div class="opponent-card">
+              <h3><span class="book-badge completed player-4">●</span> Player 4</h3>
+              <div class="opponent-hand">
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+              </div>
+              <div class="opponent-stats">4 cards • 0 books</div>
+            </div>
+          </div>
+
+          <!-- Center: Deck & All Books -->
+          <div class="center-game-area">
+            <div class="deck-section">
+              <h3>Deck</h3>
+              <div class="deck-pile">
+                <div class="playing-card back"></div>
+              </div>
+              <div class="deck-count">28 cards remaining</div>
+            </div>
+
+            <div class="all-books-section">
+              <h3>All Books (3/13 Complete)</h3>
+              <div class="books-list">
+                <span class="book-badge completed player-1">A</span>
+                <span class="book-badge placeholder">2</span>
+                <span class="book-badge completed player-3">3</span>
+                <span class="book-badge placeholder">4</span>
+                <span class="book-badge completed player-1">5</span>
+                <span class="book-badge placeholder">6</span>
+                <span class="book-badge placeholder">7</span>
+                <span class="book-badge placeholder">8</span>
+                <span class="book-badge placeholder">9</span>
+                <span class="book-badge placeholder">10</span>
+                <span class="book-badge placeholder">J</span>
+                <span class="book-badge placeholder">Q</span>
+                <span class="book-badge placeholder">K</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Player Hand -->
+          <div class="player-area card">
+            <h3>
+              <span class="book-badge completed player-1">●</span>
+              You (6 cards) • 2 books
+            </h3>
+
+            <div class="player-hand">
+              <div class="playing-card hearts rank-A" data-rank="A"></div>
+              <div class="playing-card diamonds rank-5" data-rank="5"></div>
+              <div class="playing-card clubs rank-5" data-rank="5"></div>
+              <div class="playing-card spades rank-J" data-rank="J"></div>
+              <div class="playing-card hearts rank-Q" data-rank="Q"></div>
+              <div class="playing-card diamonds rank-2" data-rank="2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Game Chat -->
+        <div class="game-chat">
+          <div class="card game-chat-area">
+            <h2>Game Chat</h2>
+            <div id="chat-area">
+              <div id="message-listing" class="message-listing">
+                <!-- System message example -->
+                <div class="chat-message system">
+                  <div class="message-header">
+                    <span class="message-username">Game</span>
+                    <span class="message-time">2:45 PM</span>
+                  </div>
+                  <span class="message-text">You asked Player 2 for 5s - Got 1 card!</span>
+                </div>
+
+                <!-- Regular chat message example -->
+                <div class="chat-message">
+                  <div class="message-header">
+                    <span class="message-username player-2">Player 2</span>
+                    <span class="message-time">2:44 PM</span>
+                  </div>
+                  <span class="message-text">Good luck everyone!</span>
+                </div>
+
+                <!-- More system messages -->
+                <div class="chat-message system">
+                  <div class="message-header">
+                    <span class="message-username">Game</span>
+                    <span class="message-time">2:43 PM</span>
+                  </div>
+                  <span class="message-text">Player 3 asked you for As - Go Fish!</span>
+                </div>
+
+                <div class="chat-message system">
+                  <div class="message-header">
+                    <span class="message-username">Game</span>
+                    <span class="message-time">2:42 PM</span>
+                  </div>
+                  <span class="message-text">You completed a book of Aces! 🎉</span>
+                </div>
+
+                <div class="chat-message system">
+                  <div class="message-header">
+                    <span class="message-username">Game</span>
+                    <span class="message-time">2:41 PM</span>
+                  </div>
+                  <span class="message-text">Game started with 4 players</span>
+                </div>
+              </div>
+
+              <div id="message-submit" class="message-submit">
+                <input type="text" placeholder="Enter your message" />
+                <button class="btn-primary">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="player">
-      <div class="hand">
-        <div class="card green five"></div>
-      </div>
-    </div>
-
-    <p><a href="/lobby">Return to lobby</a></p>
   </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Lobby</title>
+    <title>Lobby - Go Fish</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/css/bundle.css" />
     <script type="module" src="/js/chat.js" defer></script>
@@ -13,15 +13,14 @@
   <body>
     <div class="header card">
       <h1>
-        Hello
-        <%= user.username %>
-        (<%= user.id %>)
+        <span class="fish-logo">🐟</span>
+        Hello <%= user.username %> (<%= user.id %>)
       </h1>
       <a href="/auth/logout" class="btn-link">Logout</a>
     </div>
 
     <div class="lobby-container">
-      <div class="lobby-game-section">
+      <div class="lobby-main">
         <div class="card">
           <h2>Create New Game</h2>
           <form method="post" action="/games">
@@ -37,19 +36,28 @@
           </form>
         </div>
 
-        <div class="card">
-          <h2>Available Games</h2>
-          <div id="game-list"></div>
+        <div class="lobby-game-columns">
+          <div class="card">
+            <h2>Your Games</h2>
+            <div id="my-game-list"></div>
+          </div>
+
+          <div class="card">
+            <h2>Available Games</h2>
+            <div id="available-game-list"></div>
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <h2>Lobby Chat</h2>
-        <div id="chat-area">
-          <div id="message-listing" class="message-listing"></div>
-          <div id="message-submit" class="message-submit">
-            <input type="text" placeholder="Enter your message" />
-            <button class="btn-primary">Send</button>
+      <div class="lobby-chat">
+        <div class="card">
+          <h2>Lobby Chat</h2>
+          <div id="chat-area">
+            <div id="message-listing" class="message-listing"></div>
+            <div id="message-submit" class="message-submit">
+              <input type="text" placeholder="Enter your message" />
+              <button class="btn-primary">Send</button>
+            </div>
           </div>
         </div>
       </div>
