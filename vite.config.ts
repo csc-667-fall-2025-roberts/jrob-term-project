@@ -9,6 +9,15 @@ export default defineConfig(({ command, mode }) => {
     // Enable public directory for static assets like favicon
     publicDir: "public",
 
+    // Path aliases for cleaner imports
+    resolve: {
+      alias: {
+        "@shared": path.resolve(__dirname, "src/shared"),
+        "@backend": path.resolve(__dirname, "src/backend"),
+        "@frontend": path.resolve(__dirname, "src/frontend"),
+      },
+    },
+
     build: {
       // Dev outputs to src/backend/public, production to dist/public
       outDir,

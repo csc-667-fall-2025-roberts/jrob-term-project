@@ -3,7 +3,11 @@
     "target": "es2020",
     "module": "commonjs",
     "moduleResolution": "node",
+    "baseUrl": ".",
     "paths": {
+      "@shared/*": ["src/shared/*"],
+      "@backend/*": ["src/backend/*"],
+      "@frontend/*": ["src/frontend/*"],
       "*": ["./types/*.d.ts"]
     },
     "outDir": "./dist",
@@ -12,5 +16,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/backend/**/*", "src/shared/types.d.ts", "src/types"]
+  "include": ["src/backend/**/*", "src/shared/**/*", "src/types"]
 }

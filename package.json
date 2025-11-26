@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:backend": "tsc && node scripts/copy-views.js",
+    "build:backend": "tsc && tsc-alias && node scripts/copy-views.js",
     "build:frontend": "vite build",
     "build": "rm -rf dist && npm run build:backend && npm run build:frontend",
     "start": "node dist/backend/server.js",
@@ -20,21 +20,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "bcrypt": "^6.0.0",
-    "body-parser": "^2.2.0",
-    "connect-pg-simple": "^10.0.0",
-    "dotenv": "^17.2.3",
-    "ejs": "^3.1.10",
-    "express": "^5.1.0",
-    "express-session": "^1.18.2",
-    "http-errors": "^2.0.0",
-    "morgan": "^1.10.1",
-    "node-pg-migrate": "^8.0.3",
-    "pg-promise": "^12.2.0",
-    "socket.io": "^4.8.1",
-    "socket.io-client": "^4.8.1",
-    "typescript": "^5.9.3",
-    "winston": "^3.18.3",
     "@types/bcrypt": "^6.0.0",
     "@types/connect-livereload": "^0.6.3",
     "@types/connect-pg-simple": "^7.0.3",
@@ -48,10 +33,25 @@
     "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",
     "autoprefixer": "^10.4.21",
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "http-errors": "^2.0.0",
+    "morgan": "^1.10.1",
+    "node-pg-migrate": "^8.0.3",
+    "pg-promise": "^12.2.0",
     "postcss": "^8.5.6",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "tailwindcss": "^3.4.18",
     "tsx": "^4.20.6",
-    "vite": "^7.1.12"
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "winston": "^3.18.3"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
@@ -65,7 +65,8 @@
     "prettier": "^3.6.2",
     "prettier-plugin-ejs": "^1.0.3",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
