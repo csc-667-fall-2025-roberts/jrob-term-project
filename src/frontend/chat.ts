@@ -1,6 +1,6 @@
 import socketIo from "socket.io-client";
 import * as chatKeys from "../shared/keys";
-import type { ChatMessage } from "../types/types";
+import type { ChatMessage } from "@shared/types";
 
 const socket = socketIo();
 

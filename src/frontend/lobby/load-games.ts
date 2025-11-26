@@ -1,4 +1,4 @@
-import { Game } from "../../types/types";
+import { Game } from "@shared/types";
 
 const myGameListing = document.querySelector<HTMLDivElement>("#my-game-list")!;
 const availableGameListing = document.querySelector<HTMLDivElement>("#available-game-list")!;

@@ -1,7 +1,7 @@
 import { Server as HTTPServer } from "http";
 import { Server } from "socket.io";
 import { GLOBAL_ROOM } from "../../shared/keys";
-import { User } from "../../types/types";
+import { User } from "@shared/types";
 import { sessionMiddleware } from "../config/session";
 import logger from "../lib/logger";
 

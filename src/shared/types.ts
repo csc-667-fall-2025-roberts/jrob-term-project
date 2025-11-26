@@ -1,3 +1,4 @@
+// ============ User Types ============
 export interface User {
   id: number;
   username: string;
@@ -9,6 +10,7 @@ export interface SecureUser extends User {
   password: string;
 }
 
+// ============ Chat Types ============
 export interface DbChatMessage {
   id: number;
   user_id: number;
@@ -21,6 +23,7 @@ export interface ChatMessage extends DbChatMessage {
   email: string;
 }
 
+// ============ Game Types ============
 export enum GameState {
   LOBBY = "lobby",
   ACTIVE = "active",
@@ -40,6 +43,7 @@ export type Game = {
   state: GameState;
   max_players: number;
   created_at: Date;
+  current_turn_user_id?: number;
   player_count?: number;
   players?: GamePlayer[];
 };

@@ -1,6 +1,6 @@
 import socketIo from "socket.io-client";
 import * as EVENTS from "../shared/keys";
-import type { Game } from "../types/types";
+import type { Game } from "@shared/types";
 import { appendGame, loadGames, renderGames } from "./lobby/load-games";
 
 const socket = socketIo();
