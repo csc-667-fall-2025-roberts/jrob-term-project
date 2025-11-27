@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 
 import { GAME_CREATE, GAME_LISTING } from "@shared/keys";
 import * as Games from "@backend/db/games";
+import { generateGameName } from "@backend/lib/game-names";
 import logger from "@backend/lib/logger";
 
 const router = express.Router();
@@ -30,8 +31,8 @@ router.post("/", async (request, response) => {
   try {
     const { id } = request.session.user!;
     const { max_players } = request.body;
-    // Convert empty string to null so frontend displays "Game X"
-    const name = request.body.name?.trim() || null;
+    // Generate random name if not provided (e.g., "brave-green-dolphin")
+    const name = request.body.name?.trim() || generateGameName();
 
     logger.info(`Create game request ${name}, ${max_players} by ${id}`);
     const game = await Games.create(id, name, max_players);
