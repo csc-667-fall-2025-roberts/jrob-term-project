@@ -1,109 +1,60 @@
 /**
- * Game page interaction logic
- * Handles card selection and asking opponents for cards
+ * Game page entry point
+ * Handles socket connection and coordinates game modules
  */
 
-// Track the currently selected card rank
-let selectedRank: string | null = null;
+import socketIo from "socket.io-client";
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  initializeCardSelection();
-  initializeOpponentInteraction();
+import {
+  deselectCard,
+  initializeCardSelection,
+  initializeOpponentInteraction,
+} from "./game/card-selection";
+import type { GameStateUpdate } from "./game/types";
+import { updateDeckCount, updatePlayerHand, updateTurnIndicator } from "./game/ui-updates";
+
+// Get game ID from server-rendered data attribute
+const gameId = document.body.dataset.gameId || "";
+
+// Connect with gameId so server joins us to the game room
+const socket = socketIo({ query: { gameId } });
+
+// Refresh when another player joins
+socket.on("player:joined", () => {
+  window.location.reload();
+});
+
+// Handle game state updates from server
+socket.on("game:state", (newState: GameStateUpdate) => {
+  console.log("Game state update:", newState);
+  updateDeckCount(newState.deckCount);
+  updatePlayerHand(newState.myCards);
+  updateTurnIndicator(newState.isMyTurn, newState.currentTurnUserId);
 });
 
 /**
- * Set up click handlers for player's cards
+ * Ask an opponent for cards of a specific rank
  */
-function initializeCardSelection() {
-  const playerCards = document.querySelectorAll('.player-hand .playing-card');
-
-  playerCards.forEach((card) => {
-    card.addEventListener('click', () => {
-      const rank = card.getAttribute('data-rank');
-
-      if (!rank) return;
-
-      // Toggle selection
-      if (selectedRank === rank && card.classList.contains('selected')) {
-        // Deselect
-        deselectCard();
-      } else {
-        // Select this card, deselect others
-        selectCard(card as HTMLElement, rank);
-      }
+async function askForCards(targetUserId: number, rank: string) {
+  try {
+    const response = await fetch(`/games/${gameId}/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ targetUserId, rank }),
     });
-  });
+
+    const result = await response.json();
+    console.log("Ask result:", result);
+
+    // Clear selection after asking
+    deselectCard();
+  } catch (error) {
+    console.error("Error asking for cards:", error);
+  }
 }
 
-/**
- * Select a card and update UI state
- */
-function selectCard(cardElement: HTMLElement, rank: string) {
-  // Remove selection from all cards
-  const allCards = document.querySelectorAll('.player-hand .playing-card');
-  allCards.forEach(card => card.classList.remove('selected'));
-
-  // Select this card
-  cardElement.classList.add('selected');
-  selectedRank = rank;
-
-  // Make opponent cards clickable
-  const opponentCards = document.querySelectorAll('.opponent-card');
-  opponentCards.forEach(card => card.classList.add('clickable'));
-}
-
-/**
- * Deselect the current card and update UI state
- */
-function deselectCard() {
-  // Remove selection from all cards
-  const allCards = document.querySelectorAll('.player-hand .playing-card');
-  allCards.forEach(card => card.classList.remove('selected'));
-
-  selectedRank = null;
-
-  // Remove clickable state from opponent cards
-  const opponentCards = document.querySelectorAll('.opponent-card');
-  opponentCards.forEach(card => card.classList.remove('clickable'));
-}
-
-/**
- * Set up click handlers for opponent cards
- */
-function initializeOpponentInteraction() {
-  const opponentCards = document.querySelectorAll('.opponent-card');
-
-  opponentCards.forEach((opponentCard) => {
-    opponentCard.addEventListener('click', () => {
-      // Only handle clicks if a card is selected
-      if (!selectedRank || !opponentCard.classList.contains('clickable')) {
-        return;
-      }
-
-      // Get opponent player number from the badge class
-      const badge = opponentCard.querySelector('.book-badge');
-      const playerClasses = badge?.className.match(/player-(\d+)/);
-      const opponentPlayer = playerClasses ? playerClasses[1] : null;
-
-      if (opponentPlayer) {
-        handleAskForCards(opponentPlayer, selectedRank);
-      }
-    });
-  });
-}
-
-/**
- * Handle the "ask for cards" action
- * TODO: Replace with actual API call when backend is ready
- */
-function handleAskForCards(opponentPlayer: string, rank: string) {
-  console.log(`Asking Player ${opponentPlayer} for ${rank}s`);
-
-  // TODO: Make API call to backend
-  // For now, just show a temporary message
-  alert(`Asking Player ${opponentPlayer} for ${rank}s\n\n(This will be replaced with actual game logic)`);
-
-  // Clear selection
-  deselectCard();
-}
+// Initialize when DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  initializeCardSelection();
+  initializeOpponentInteraction(askForCards);
+});
