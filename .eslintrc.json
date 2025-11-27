@@ -10,7 +10,7 @@
     "sourceType": "module",
     "ecmaVersion": "latest"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "simple-import-sort"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -22,7 +22,16 @@
       "warn",
       { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
     ],
-    "no-console": "on"
+    "no-console": "off",
+    "simple-import-sort/imports": ["error", {
+      "groups": [
+        ["^node:"],
+        ["^@?\\w"],
+        ["^@(shared|backend|frontend)(/.*|$)"],
+        ["^\\."]
+      ]
+    }],
+    "simple-import-sort/exports": "error"
   },
   "overrides": [
     {

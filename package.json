@@ -13,7 +13,8 @@
     "start:dev": "npm run dev",
     "migrate:create": "node-pg-migrate create -j ts -- ",
     "migrate:up": "NODE_OPTIONS='--import tsx' node-pg-migrate up",
-    "migrate:down": "NODE_OPTIONS='--import tsx' node-pg-migrate down"
+    "migrate:down": "NODE_OPTIONS='--import tsx' node-pg-migrate down",
+    "seed:dev": "npx tsx scripts/seed-dev.ts"
   },
   "keywords": [],
   "author": "",
@@ -60,6 +61,7 @@
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.3",
     "livereload": "^0.10.3",
