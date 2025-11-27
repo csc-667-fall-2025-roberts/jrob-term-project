@@ -7,7 +7,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/css/bundle.css" />
     <script type="module" src="/js/game.js" defer></script>
-    <script type="module" src="/js/dev-menu.js" defer></script> <!-- DEV ONLY -->
+    <script type="module" src="/js/dev-menu.js" defer></script>
   </head>
   <body>
     <div class="game-container">
@@ -17,7 +17,7 @@
           <span class="fish-logo">🐟</span>
           <%= name || `Game ${id}` %>
           <span class="game-meta-info">
-            • Created <%= (new Date(created_at)).toLocaleDateString() %> • <%= max_players %> players
+            • <%= state %> • <%= max_players %> players max
           </span>
         </h1>
         <a href="/lobby" class="btn-link">← Back to Lobby</a>
@@ -27,40 +27,68 @@
       <div class="game-layout">
         <!-- Left: Game Board -->
         <div class="game-main">
-          <!-- Opponents (Compact Horizontal) -->
+          <!-- Opponents Area -->
           <div class="opponents-area">
-            <div class="opponent-card">
-              <h3><span class="book-badge completed player-2">●</span> Player 2</h3>
-              <div class="opponent-hand">
-                <div class="playing-card back"></div>
-                <div class="playing-card back"></div>
-                <div class="playing-card back"></div>
-                <div class="playing-card back"></div>
-                <div class="playing-card back"></div>
+            <% if (typeof players !== 'undefined' && players && players.length > 0) { %>
+              <!-- Real opponents from data -->
+              <% players.filter(p => p.user_id !== currentUserId).forEach((player, i) => { %>
+                <div class="opponent-card" data-user-id="<%= player.user_id %>">
+                  <h3>
+                    <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= player.username %>" alt="" class="player-avatar player-<%= (i % 4) + 2 %>" />
+                    <%= player.username %>
+                  </h3>
+                  <div class="opponent-hand">
+                    <% for (let j = 0; j < (player.card_count || 0); j++) { %>
+                      <div class="playing-card back"></div>
+                    <% } %>
+                  </div>
+                  <div class="opponent-stats"><%= player.card_count || 0 %> cards • <%= player.book_count || 0 %> books</div>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <!-- PLACEHOLDER: Remove this else block after Session 2 wires up players -->
+              <div class="opponent-card" data-user-id="0">
+                <h3>
+                  <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=kenji" alt="" class="player-avatar player-2" />
+                  kenji
+                </h3>
+                <div class="opponent-hand">
+                  <div class="playing-card back"></div>
+                  <div class="playing-card back"></div>
+                  <div class="playing-card back"></div>
+                  <div class="playing-card back"></div>
+                  <div class="playing-card back"></div>
+                </div>
+                <div class="opponent-stats">5 cards • 0 books</div>
               </div>
-              <div class="opponent-stats">5 cards • 0 books</div>
-            </div>
 
-            <div class="opponent-card">
-              <h3><span class="book-badge completed player-3">●</span> Player 3</h3>
-              <div class="opponent-hand">
-                <div class="playing-card back"></div>
-                <div class="playing-card back"></div>
-                <div class="playing-card back"></div>
+              <div class="opponent-card" data-user-id="0">
+                <h3>
+                  <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=priya" alt="" class="player-avatar player-3" />
+                  priya
+                </h3>
+                <div class="opponent-hand">
+                  <div class="playing-card back"></div>
+                  <div class="playing-card back"></div>
+                  <div class="playing-card back"></div>
+                </div>
+                <div class="opponent-stats">3 cards • 1 book</div>
               </div>
-              <div class="opponent-stats">3 cards • 1 book</div>
-            </div>
 
-            <div class="opponent-card">
-              <h3><span class="book-badge completed player-4">●</span> Player 4</h3>
-              <div class="opponent-hand">
-                <div class="playing-card back"></div>
-                <div class="playing-card back"></div>
-                <div class="playing-card back"></div>
-                <div class="playing-card back"></div>
+              <div class="opponent-card" data-user-id="0">
+                <h3>
+                  <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=omar" alt="" class="player-avatar player-4" />
+                  omar
+                </h3>
+                <div class="opponent-hand">
+                  <div class="playing-card back"></div>
+                  <div class="playing-card back"></div>
+                  <div class="playing-card back"></div>
+                  <div class="playing-card back"></div>
+                </div>
+                <div class="opponent-stats">4 cards • 0 books</div>
               </div>
-              <div class="opponent-stats">4 cards • 0 books</div>
-            </div>
+            <% } %>
           </div>
 
           <!-- Center: Deck & All Books -->
@@ -70,43 +98,66 @@
               <div class="deck-pile">
                 <div class="playing-card back"></div>
               </div>
-              <div class="deck-count">28 cards remaining</div>
+              <% if (typeof deckCount !== 'undefined') { %>
+                <div class="deck-count"><%= deckCount %> cards remaining</div>
+              <% } else { %>
+                <div class="deck-count">28 cards remaining</div>
+              <% } %>
             </div>
 
             <div class="all-books-section">
-              <h3>All Books (3/13 Complete)</h3>
+              <%
+                const allRanks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+                const completedBooks = (typeof allBooks !== 'undefined' && allBooks) ? allBooks : [];
+                const bookCount = completedBooks.length;
+              %>
+              <h3>All Books (<%= bookCount %>/13 Complete)</h3>
               <div class="books-list">
-                <span class="book-badge completed player-1">A</span>
-                <span class="book-badge placeholder">2</span>
-                <span class="book-badge completed player-3">3</span>
-                <span class="book-badge placeholder">4</span>
-                <span class="book-badge completed player-1">5</span>
-                <span class="book-badge placeholder">6</span>
-                <span class="book-badge placeholder">7</span>
-                <span class="book-badge placeholder">8</span>
-                <span class="book-badge placeholder">9</span>
-                <span class="book-badge placeholder">10</span>
-                <span class="book-badge placeholder">J</span>
-                <span class="book-badge placeholder">Q</span>
-                <span class="book-badge placeholder">K</span>
+                <% allRanks.forEach(rank => { %>
+                  <% const book = completedBooks.find(b => b.rank === rank); %>
+                  <% if (book) { %>
+                    <span class="book-badge completed" title="<%= book.username %>"><%= rank %></span>
+                  <% } else { %>
+                    <span class="book-badge placeholder"><%= rank %></span>
+                  <% } %>
+                <% }) %>
               </div>
             </div>
           </div>
 
           <!-- Player Hand -->
-          <div class="player-area card">
+          <div class="player-area card <%= (typeof currentTurnUserId !== 'undefined' && currentTurnUserId === currentUserId) ? 'active-turn' : '' %>">
+            <%
+              const myPlayer = (typeof players !== 'undefined' && players)
+                ? players.find(p => p.user_id === currentUserId)
+                : null;
+              const myCardCount = (typeof myCards !== 'undefined' && myCards) ? myCards.length : 6;
+              const myBookCount = myPlayer ? myPlayer.book_count : 2;
+              const myUsername = myPlayer ? myPlayer.username : 'You';
+            %>
             <h3>
-              <span class="book-badge completed player-1">●</span>
-              You (6 cards) • 2 books
+              <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= myUsername %>" alt="" class="player-avatar player-1" />
+              <%= myUsername %> (<%= myCardCount %> cards) • <%= myBookCount %> books
+              <% if (typeof currentTurnUserId !== 'undefined' && currentTurnUserId === currentUserId) { %>
+                <span class="turn-indicator">— Your Turn!</span>
+              <% } %>
             </h3>
 
             <div class="player-hand">
-              <div class="playing-card hearts rank-A" data-rank="A"></div>
-              <div class="playing-card diamonds rank-5" data-rank="5"></div>
-              <div class="playing-card clubs rank-5" data-rank="5"></div>
-              <div class="playing-card spades rank-J" data-rank="J"></div>
-              <div class="playing-card hearts rank-Q" data-rank="Q"></div>
-              <div class="playing-card diamonds rank-2" data-rank="2"></div>
+              <% if (typeof myCards === 'undefined') { %>
+                <!-- PLACEHOLDER: Remove this if block after Session 1 wires up myCards -->
+                <div class="playing-card suit-H rank-A" data-rank="A"></div>
+                <div class="playing-card suit-D rank-5" data-rank="5"></div>
+                <div class="playing-card suit-C rank-5" data-rank="5"></div>
+                <div class="playing-card suit-S rank-J" data-rank="J"></div>
+                <div class="playing-card suit-H rank-Q" data-rank="Q"></div>
+                <div class="playing-card suit-D rank-2" data-rank="2"></div>
+              <% } else { %>
+                <!-- Real cards from data (empty if no cards yet) -->
+                <% myCards.forEach(card => { %>
+                  <div class="playing-card suit-<%= card.suit %> rank-<%= card.rank %>" data-rank="<%= card.rank %>" data-suit="<%= card.suit %>"></div>
+                <% }) %>
+              <% } %>
             </div>
           </div>
         </div>
@@ -117,47 +168,13 @@
             <h2>Game Chat</h2>
             <div id="chat-area">
               <div id="message-listing" class="message-listing">
-                <!-- System message example -->
+                <!-- Placeholder messages - will be replaced by real chat -->
                 <div class="chat-message system">
                   <div class="message-header">
                     <span class="message-username">Game</span>
-                    <span class="message-time">2:45 PM</span>
+                    <span class="message-time">--:--</span>
                   </div>
-                  <span class="message-text">You asked Player 2 for 5s - Got 1 card!</span>
-                </div>
-
-                <!-- Regular chat message example -->
-                <div class="chat-message">
-                  <div class="message-header">
-                    <span class="message-username player-2">Player 2</span>
-                    <span class="message-time">2:44 PM</span>
-                  </div>
-                  <span class="message-text">Good luck everyone!</span>
-                </div>
-
-                <!-- More system messages -->
-                <div class="chat-message system">
-                  <div class="message-header">
-                    <span class="message-username">Game</span>
-                    <span class="message-time">2:43 PM</span>
-                  </div>
-                  <span class="message-text">Player 3 asked you for As - Go Fish!</span>
-                </div>
-
-                <div class="chat-message system">
-                  <div class="message-header">
-                    <span class="message-username">Game</span>
-                    <span class="message-time">2:42 PM</span>
-                  </div>
-                  <span class="message-text">You completed a book of Aces! 🎉</span>
-                </div>
-
-                <div class="chat-message system">
-                  <div class="message-header">
-                    <span class="message-username">Game</span>
-                    <span class="message-time">2:41 PM</span>
-                  </div>
-                  <span class="message-text">Game started with 4 players</span>
+                  <span class="message-text">Game chat will appear here...</span>
                 </div>
               </div>
 
@@ -170,5 +187,10 @@
         </div>
       </div>
     </div>
+
+    <!-- Card template for JavaScript rendering -->
+    <template id="card-template">
+      <div class="playing-card"></div>
+    </template>
   </body>
 </html>

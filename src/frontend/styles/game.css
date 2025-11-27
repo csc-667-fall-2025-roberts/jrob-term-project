@@ -65,9 +65,34 @@
 }
 
 .opponent-card h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
   font-size: 0.8rem;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
   color: var(--color-text-primary);
+}
+
+.player-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--player-2-color);
+  margin-right: var(--spacing-sm);
+  margin-bottom: 6px; /* Space for box-shadow */
+}
+
+.player-avatar.player-1 { box-shadow: 0 0 0 2px white, 0 0 0 4px var(--player-1-color); }
+.player-avatar.player-2 { box-shadow: 0 0 0 2px white, 0 0 0 4px var(--player-2-color); }
+.player-avatar.player-3 { box-shadow: 0 0 0 2px white, 0 0 0 4px var(--player-3-color); }
+.player-avatar.player-4 { box-shadow: 0 0 0 2px white, 0 0 0 4px var(--player-4-color); }
+.player-avatar.player-5 { box-shadow: 0 0 0 2px white, 0 0 0 4px var(--player-5-color); }
+.player-avatar.player-6 { box-shadow: 0 0 0 2px white, 0 0 0 4px var(--player-6-color); }
+
+.player-area .player-avatar {
+  width: 30px;
+  height: 30px;
 }
 
 .opponent-stats {

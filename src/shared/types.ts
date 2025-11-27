@@ -47,3 +47,14 @@ export type Game = {
   player_count?: number;
   players?: GamePlayer[];
 };
+
+// ============ Game Cards ============
+export interface GameCard {
+  id: number;
+  game_id: number;
+  card_id: number;
+  owner_id: number;
+  position: number | null;
+  rank?: string;
+  suit?: string;
+}

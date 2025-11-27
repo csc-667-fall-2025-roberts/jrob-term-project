@@ -930,15 +930,15 @@ h2 {
   position: absolute;
 }
 
-/* Card suits/ranks */
-.playing-card.hearts,
-.playing-card.diamonds {
+/* Card suits/ranks - class names match DB values (H, D, C, S) */
+.playing-card.suit-H,
+.playing-card.suit-D {
   background: white;
   color: #e74c3c;
 }
 
-.playing-card.clubs,
-.playing-card.spades {
+.playing-card.suit-C,
+.playing-card.suit-S {
   background: white;
   color: #2c3e50;
 }
@@ -957,11 +957,11 @@ h2 {
 .playing-card.rank-Q::before { content: "Q"; }
 .playing-card.rank-K::before { content: "K"; }
 
-/* Enhanced card face design with suit symbols */
-.playing-card.hearts::after { content: "♥"; }
-.playing-card.diamonds::after { content: "♦"; }
-.playing-card.clubs::after { content: "♣"; }
-.playing-card.spades::after { content: "♠"; }
+/* Suit symbols - class names match DB values (H, D, C, S) */
+.playing-card.suit-H::after { content: "♥"; }
+.playing-card.suit-D::after { content: "♦"; }
+.playing-card.suit-C::after { content: "♣"; }
+.playing-card.suit-S::after { content: "♠"; }
 
 .playing-card::before,
 .playing-card::after {
@@ -1224,6 +1224,7 @@ h2 {
   position: absolute;
   top: 0;
   left: -100%;
+  pointer-events: none; /* Don't block clicks */
   width: 100%;
   height: 100%;
   background: linear-gradient(

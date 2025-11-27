@@ -44,15 +44,15 @@
   animation: float 4s ease-in-out infinite; /* Slower float */
 }
 
-/* Card suit colors */
-.playing-card.hearts,
-.playing-card.diamonds {
+/* Card suit colors - class names match DB values (H, D, C, S) */
+.playing-card.suit-H,
+.playing-card.suit-D {
   background: white;
   color: #dc2626; /* Deeper red for better contrast */
 }
 
-.playing-card.clubs,
-.playing-card.spades {
+.playing-card.suit-C,
+.playing-card.suit-S {
   background: white;
   color: #1e293b; /* Dark blue-gray for black suits */
 }
@@ -92,11 +92,11 @@
 .playing-card.rank-Q::before { content: "Q"; }
 .playing-card.rank-K::before { content: "K"; }
 
-/* Suit symbols */
-.playing-card.hearts::after { content: "♥"; }
-.playing-card.diamonds::after { content: "♦"; }
-.playing-card.clubs::after { content: "♣"; }
-.playing-card.spades::after { content: "♠"; }
+/* Suit symbols - class names match DB values (H, D, C, S) */
+.playing-card.suit-H::after { content: "♥"; }
+.playing-card.suit-D::after { content: "♦"; }
+.playing-card.suit-C::after { content: "♣"; }
+.playing-card.suit-S::after { content: "♠"; }
 
 /* ==================== CARD INTERACTION STATES ==================== */
 
