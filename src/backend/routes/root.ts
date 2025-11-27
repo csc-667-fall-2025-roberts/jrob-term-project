@@ -1,5 +1,6 @@
 import express from "express";
-import { requireGuest } from "../middleware";
+
+import { requireGuest } from "@backend/middleware";
 
 const router = express.Router();
 

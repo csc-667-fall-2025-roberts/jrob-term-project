@@ -1,8 +1,9 @@
 import express from "express";
 import { Server } from "socket.io";
-import { GAME_CREATE, GAME_LISTING } from "../../shared/keys";
-import { Games } from "../db";
-import logger from "../lib/logger";
+
+import { GAME_CREATE, GAME_LISTING } from "@shared/keys";
+import * as Games from "@backend/db/games";
+import logger from "@backend/lib/logger";
 
 const router = express.Router();
 

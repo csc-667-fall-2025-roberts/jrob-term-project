@@ -6,11 +6,12 @@ import * as path from "path";
 import bodyParser from "body-parser";
 import { configDotenv } from "dotenv";
 import { createServer } from "http";
-import { sessionMiddleware } from "./config/session";
-import logger from "./lib/logger";
-import { requireUser } from "./middleware";
-import * as routes from "./routes";
-import { initSockets } from "./sockets/init";
+
+import { sessionMiddleware } from "@backend/config/session";
+import logger from "@backend/lib/logger";
+import { requireUser } from "@backend/middleware";
+import * as routes from "@backend/routes";
+import { initSockets } from "@backend/sockets/init";
 
 configDotenv();
 
