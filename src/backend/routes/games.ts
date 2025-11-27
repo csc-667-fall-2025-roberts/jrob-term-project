@@ -32,6 +32,9 @@ router.post("/", async (request, response) => {
 
     logger.info(`Create game request ${name}, ${max_players} by ${id}`);
     const game = await Games.create(id, name, max_players);
+
+    // Add creator as first player
+    await Games.join(game.id, id);
     logger.info(`Game created: ${game.id}`);
 
     const io = request.app.get("io") as Server;
@@ -45,10 +48,15 @@ router.post("/", async (request, response) => {
 });
 
 router.get("/:id", async (request, response) => {
-  const { id } = request.params;
-  const game = await Games.get(parseInt(id));
+  const gameId = parseInt(request.params.id);
+  const currentUserId = request.session.user!.id;
 
-  response.render("games/game", { ...game });
+  const game = await Games.get(gameId);
+
+  response.render("games/game", {
+    ...game,
+    currentUserId,
+  });
 });
 
 router.post("/:game_id/join", async (request, response) => {
@@ -57,7 +65,7 @@ router.post("/:game_id/join", async (request, response) => {
 
   await Games.join(parseInt(game_id), id);
 
-  response.redirect(`/games/${id}`);
+  response.redirect(`/games/${game_id}`);
 });
 
 export default router;
