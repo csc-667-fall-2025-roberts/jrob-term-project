@@ -29,7 +29,9 @@ router.get("/", async (request, response) => {
 router.post("/", async (request, response) => {
   try {
     const { id } = request.session.user!;
-    const { name, max_players } = request.body;
+    const { max_players } = request.body;
+    // Convert empty string to null so frontend displays "Game X"
+    const name = request.body.name?.trim() || null;
 
     logger.info(`Create game request ${name}, ${max_players} by ${id}`);
     const game = await Games.create(id, name, max_players);
