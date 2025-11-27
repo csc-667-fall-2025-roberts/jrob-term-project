@@ -3,6 +3,7 @@ dist/
 logs/
 .env
 src/backend/public/js/
+src/backend/public/assets/
 
 # Teaching/livecoding guides
 *.livecoding.md
