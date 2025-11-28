@@ -1,7 +1,7 @@
 import express from "express";
 
-import { CHAT_LISTING, CHAT_MESSAGE, GLOBAL_ROOM } from "@shared/keys";
 import * as Chat from "@backend/db/chat";
+import { CHAT_LISTING, CHAT_MESSAGE, GLOBAL_ROOM } from "@shared/keys";
 
 const router = express.Router();
 

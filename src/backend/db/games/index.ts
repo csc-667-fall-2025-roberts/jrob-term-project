@@ -1,4 +1,5 @@
 import { Game, GameState } from "@shared/types";
+
 import db from "../connection";
 import { CREATE_GAME, GAME_BY_ID, GAMES_BY_USER, JOIN_GAME, LIST_GAMES } from "./sql";
 

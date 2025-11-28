@@ -1,4 +1,5 @@
 import { ChatMessage } from "@shared/types";
+
 import db from "../connection";
 import { CREATE_MESSAGE, RECENT_MESSAGES } from "./sql";
 

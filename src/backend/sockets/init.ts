@@ -1,10 +1,10 @@
 import { Server as HTTPServer } from "http";
 import { Server } from "socket.io";
 
-import { GLOBAL_ROOM } from "@shared/keys";
-import { User } from "@shared/types";
 import { sessionMiddleware } from "@backend/config/session";
 import logger from "@backend/lib/logger";
+import { GLOBAL_ROOM } from "@shared/keys";
+import { User } from "@shared/types";
 
 export const initSockets = (httpServer: HTTPServer) => {
   const io = new Server(httpServer);
@@ -12,7 +12,7 @@ export const initSockets = (httpServer: HTTPServer) => {
   io.engine.use(sessionMiddleware);
 
   io.on("connection", (socket) => {
-    // @ts-ignore
+    // @ts-expect-error session is attached by middleware
     const session = socket.request.session as { id: string; user: User };
 
     logger.info(`socket for user ${session.user.username} established`);

@@ -9,15 +9,15 @@ let isOpen = false;
 let confettiCount = 0;
 
 // Initialize dev menu
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   createDevMenu();
   setupKeyboardShortcuts();
 });
 
 function createDevMenu() {
-  const menu = document.createElement('div');
-  menu.id = 'dev-menu';
-  menu.className = 'dev-menu collapsed';
+  const menu = document.createElement("div");
+  menu.id = "dev-menu";
+  menu.className = "dev-menu collapsed";
 
   menu.innerHTML = `
     <div class="dev-menu-header">
@@ -72,11 +72,11 @@ function createDevMenu() {
   document.body.appendChild(menu);
 
   // Toggle button handler
-  document.getElementById('dev-menu-toggle')?.addEventListener('click', toggleMenu);
+  document.getElementById("dev-menu-toggle")?.addEventListener("click", toggleMenu);
 
   // Action buttons
-  menu.querySelectorAll('[data-action]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  menu.querySelectorAll("[data-action]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
       const action = (e.target as HTMLElement).dataset.action;
       if (action) handleAction(action);
     });
@@ -84,44 +84,44 @@ function createDevMenu() {
 }
 
 function toggleMenu() {
-  const menu = document.getElementById('dev-menu');
-  const toggle = document.getElementById('dev-menu-toggle');
+  const menu = document.getElementById("dev-menu");
+  const toggle = document.getElementById("dev-menu-toggle");
   if (!menu || !toggle) return;
 
   isOpen = !isOpen;
-  menu.classList.toggle('collapsed');
-  toggle.textContent = isOpen ? '▲' : '▼';
+  menu.classList.toggle("collapsed");
+  toggle.textContent = isOpen ? "▲" : "▼";
 }
 
 function setupKeyboardShortcuts() {
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener("keydown", (e) => {
     // Ignore if typing in input
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
-    switch(e.key) {
-      case '`':
+    switch (e.key) {
+      case "`":
         toggleMenu();
         e.preventDefault();
         break;
-      case 't':
-      case 'T':
-        handleAction('turn-player');
+      case "t":
+      case "T":
+        handleAction("turn-player");
         break;
-      case 's':
-      case 'S':
-        handleAction('select-card');
+      case "s":
+      case "S":
+        handleAction("select-card");
         break;
-      case 'd':
-      case 'D':
-        handleAction('anim-deal');
+      case "d":
+      case "D":
+        handleAction("anim-deal");
         break;
-      case 'c':
-      case 'C':
-        handleAction('confetti');
+      case "c":
+      case "C":
+        handleAction("confetti");
         break;
-      case 'b':
-      case 'B':
-        handleAction('complete-book');
+      case "b":
+      case "B":
+        handleAction("complete-book");
         break;
     }
   });
@@ -130,79 +130,75 @@ function setupKeyboardShortcuts() {
 function handleAction(action: string) {
   console.log(`[DEV] Action: ${action}`);
 
-  switch(action) {
+  switch (action) {
     // Turn states
-    case 'turn-player':
+    case "turn-player":
       clearAllTurns();
-      document.querySelector('.player-area')?.classList.add('active-turn');
+      document.querySelector(".player-area")?.classList.add("active-turn");
       break;
-    case 'turn-p2':
+    case "turn-p2":
       clearAllTurns();
-      document.querySelectorAll('.opponent-card')[0]?.classList.add('active-turn');
+      document.querySelectorAll(".opponent-card")[0]?.classList.add("active-turn");
       break;
-    case 'turn-p3':
+    case "turn-p3":
       clearAllTurns();
-      document.querySelectorAll('.opponent-card')[1]?.classList.add('active-turn');
+      document.querySelectorAll(".opponent-card")[1]?.classList.add("active-turn");
       break;
-    case 'turn-none':
+    case "turn-none":
       clearAllTurns();
       break;
 
     // Card selection
-    case 'select-card':
-      const cards = document.querySelectorAll('.player-hand .playing-card');
+    case "select-card":
+      const cards = document.querySelectorAll(".player-hand .playing-card");
       const randomCard = cards[Math.floor(Math.random() * cards.length)];
-      randomCard?.classList.add('selected');
+      randomCard?.classList.add("selected");
       break;
-    case 'make-clickable':
-      document.querySelectorAll('.opponent-card').forEach(opp =>
-        opp.classList.add('clickable')
-      );
+    case "make-clickable":
+      document.querySelectorAll(".opponent-card").forEach((opp) => opp.classList.add("clickable"));
       break;
-    case 'clear-selection':
-      document.querySelectorAll('.playing-card').forEach(card =>
-        card.classList.remove('selected')
-      );
-      document.querySelectorAll('.opponent-card').forEach(opp =>
-        opp.classList.remove('clickable')
-      );
+    case "clear-selection":
+      document
+        .querySelectorAll(".playing-card")
+        .forEach((card) => card.classList.remove("selected"));
+      document
+        .querySelectorAll(".opponent-card")
+        .forEach((opp) => opp.classList.remove("clickable"));
       break;
 
     // Animations
-    case 'anim-deal':
-      animatePlayerCards('dealing', 800);
+    case "anim-deal":
+      animatePlayerCards("dealing", 800);
       break;
-    case 'anim-transfer':
-      animateRandomCard('transferring', 600);
+    case "anim-transfer":
+      animateRandomCard("transferring", 600);
       break;
-    case 'anim-draw':
-      animateRandomCard('drawing', 500);
+    case "anim-draw":
+      animateRandomCard("drawing", 500);
       break;
-    case 'anim-success':
-      animateRandomCard('success', 600);
+    case "anim-success":
+      animateRandomCard("success", 600);
       break;
-    case 'anim-gofish':
-      animateRandomCard('go-fish', 500);
+    case "anim-gofish":
+      animateRandomCard("go-fish", 500);
       break;
 
     // Book events
-    case 'complete-book':
+    case "complete-book":
       completeRandomBook();
       break;
-    case 'confetti':
+    case "confetti":
       createConfetti();
       break;
   }
 }
 
 function clearAllTurns() {
-  document.querySelectorAll('.active-turn').forEach(el =>
-    el.classList.remove('active-turn')
-  );
+  document.querySelectorAll(".active-turn").forEach((el) => el.classList.remove("active-turn"));
 }
 
 function animatePlayerCards(className: string, duration: number) {
-  const cards = document.querySelectorAll('.player-hand .playing-card');
+  const cards = document.querySelectorAll(".player-hand .playing-card");
   cards.forEach((card, i) => {
     setTimeout(() => {
       card.classList.add(className);
@@ -212,7 +208,7 @@ function animatePlayerCards(className: string, duration: number) {
 }
 
 function animateRandomCard(className: string, duration: number) {
-  const cards = document.querySelectorAll('.player-hand .playing-card');
+  const cards = document.querySelectorAll(".player-hand .playing-card");
   const randomCard = cards[Math.floor(Math.random() * cards.length)];
   if (randomCard) {
     randomCard.classList.add(className);
@@ -221,19 +217,19 @@ function animateRandomCard(className: string, duration: number) {
 }
 
 function completeRandomBook() {
-  const placeholders = document.querySelectorAll('.book-badge.placeholder');
+  const placeholders = document.querySelectorAll(".book-badge.placeholder");
   if (placeholders.length === 0) {
-    console.log('[DEV] No more placeholder books!');
+    console.log("[DEV] No more placeholder books!");
     return;
   }
 
   const randomBook = placeholders[Math.floor(Math.random() * placeholders.length)] as HTMLElement;
-  randomBook.classList.remove('placeholder');
-  randomBook.classList.add('completed', 'celebrating', 'flash', 'player-1');
+  randomBook.classList.remove("placeholder");
+  randomBook.classList.add("completed", "celebrating", "flash", "player-1");
 
   // Remove animation classes after completion
   setTimeout(() => {
-    randomBook.classList.remove('celebrating', 'flash');
+    randomBook.classList.remove("celebrating", "flash");
   }, 2000);
 
   // Trigger confetti
@@ -241,12 +237,12 @@ function completeRandomBook() {
 }
 
 function createConfetti() {
-  const colors = ['#fbbf24', '#3b82f6', '#ef4444', '#10b981', '#8b5cf6'];
+  const colors = ["#fbbf24", "#3b82f6", "#ef4444", "#10b981", "#8b5cf6"];
   const count = 50;
 
   for (let i = 0; i < count; i++) {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
     confetti.style.left = `${Math.random() * 100}%`;
     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
     confetti.style.animationDelay = `${Math.random() * 0.5}s`;

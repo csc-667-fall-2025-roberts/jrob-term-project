@@ -1,11 +1,10 @@
+import bodyParser from "body-parser";
+import { configDotenv } from "dotenv";
 import express from "express";
+import { createServer } from "http";
 import createHttpError from "http-errors";
 import morgan from "morgan";
 import * as path from "path";
-
-import bodyParser from "body-parser";
-import { configDotenv } from "dotenv";
-import { createServer } from "http";
 
 import { sessionMiddleware } from "@backend/config/session";
 import logger from "@backend/lib/logger";

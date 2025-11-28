@@ -1,6 +1,6 @@
-import winston from "winston";
-import path from "path";
 import fs from "fs";
+import path from "path";
+import winston from "winston";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -21,7 +21,7 @@ const logFormat = winston.format.combine(
       return `${timestamp} [${level.toUpperCase()}]: ${message}\n${stack}`;
     }
     return `${timestamp} [${level.toUpperCase()}]: ${message}`;
-  })
+  }),
 );
 
 // Configure transports based on environment
@@ -39,17 +39,14 @@ if (isProduction) {
     new winston.transports.File({
       filename: path.join(process.cwd(), "logs", "error.log"),
       level: "error",
-    })
+    }),
   );
 } else {
   // Development: Console only (current behavior)
   transports.push(
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        logFormat
-      ),
-    })
+      format: winston.format.combine(winston.format.colorize(), logFormat),
+    }),
   );
 }
 

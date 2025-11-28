@@ -1,6 +1,8 @@
 import socketIo from "socket.io-client";
-import * as chatKeys from "../shared/keys";
+
 import type { ChatMessage } from "@shared/types";
+
+import * as chatKeys from "../shared/keys";
 
 const socket = socketIo();
 
@@ -15,7 +17,7 @@ const appendMessage = ({ username, created_at, message }: ChatMessage) => {
   const timeSpan = clone.querySelector(".message-time") as HTMLElement;
   const time = new Date(created_at);
   timeSpan!.textContent = formatTimeAgo(time);
-  // @ts-ignore
+  // @ts-expect-error dataset accepts string values
   timeSpan!.dataset.timestamp = created_at;
 
   const usernameSpan = clone.querySelector(".message-username");

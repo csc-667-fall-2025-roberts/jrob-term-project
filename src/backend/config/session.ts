@@ -7,7 +7,7 @@ const PgSession = connectPgSimple(session);
 
 export const sessionMiddleware = session({
   store: new PgSession({
-    // @ts-ignore
+    // @ts-expect-error pg-promise pool is compatible
     pool: db.$pool,
     tableName: "session",
   }),

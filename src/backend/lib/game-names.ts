@@ -1,9 +1,4 @@
-import {
-  adjectives,
-  animals,
-  colors,
-  uniqueNamesGenerator,
-} from "unique-names-generator";
+import { adjectives, animals, colors, uniqueNamesGenerator } from "unique-names-generator";
 
 /**
  * Generates a random game name like "brave-green-dolphin"

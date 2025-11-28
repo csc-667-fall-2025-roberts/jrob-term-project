@@ -20,7 +20,8 @@ const createGameElement = (game: Game, isMyGame: boolean = false) => {
 
   // Show player count / max players
   const playerCount = game.player_count ?? 0;
-  gameItem.querySelector(".max-players")!.textContent = `${playerCount}/${game.max_players} players`;
+  gameItem.querySelector(".max-players")!.textContent =
+    `${playerCount}/${game.max_players} players`;
 
   // Update form action, method, and button text
   const form = gameItem.querySelector("form")!;
@@ -44,14 +45,16 @@ export const renderGames = (data: { myGames: Game[]; availableGames: Game[] }) =
   if (data.myGames.length === 0) {
     myGameListing.innerHTML = '<p class="empty-state">No games yet. Create one to get started!</p>';
   } else {
-    myGameListing.replaceChildren(...data.myGames.map(g => createGameElement(g, true)));
+    myGameListing.replaceChildren(...data.myGames.map((g) => createGameElement(g, true)));
   }
 
   // Render available games
   if (data.availableGames.length === 0) {
     availableGameListing.innerHTML = '<p class="empty-state">No available games to join.</p>';
   } else {
-    availableGameListing.replaceChildren(...data.availableGames.map(g => createGameElement(g, false)));
+    availableGameListing.replaceChildren(
+      ...data.availableGames.map((g) => createGameElement(g, false)),
+    );
   }
 };
 

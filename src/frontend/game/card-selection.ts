@@ -71,7 +71,9 @@ export function initializeCardSelection() {
 /**
  * Set up click handlers for opponent cards
  */
-export function initializeOpponentInteraction(onAskForCards: (targetUserId: number, rank: string) => void) {
+export function initializeOpponentInteraction(
+  onAskForCards: (targetUserId: number, rank: string) => void,
+) {
   const opponentCards = document.querySelectorAll(".opponent-card");
 
   opponentCards.forEach((opponentCard) => {
