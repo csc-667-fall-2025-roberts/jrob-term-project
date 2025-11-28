@@ -14,9 +14,13 @@
     <div class="header card">
       <h1>
         <span class="fish-logo">🐟</span>
-        Hello <%= user.username %> (<%= user.id %>)
+        Go Fish
       </h1>
-      <a href="/auth/logout" class="btn-link">Logout</a>
+      <div class="header-user">
+        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= user.username %>" alt="" class="header-avatar" />
+        <span class="header-username"><%= user.username %></span>
+        <a href="/auth/logout" class="btn-link">Logout</a>
+      </div>
     </div>
 
     <div class="lobby-container">

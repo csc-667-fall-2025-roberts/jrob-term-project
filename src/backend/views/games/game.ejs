@@ -20,7 +20,11 @@
             • <%= state %> • <%= max_players %> players max
           </span>
         </h1>
-        <a href="/lobby" class="btn-link">← Back to Lobby</a>
+        <div class="header-user">
+          <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= currentUsername %>" alt="" class="header-avatar" />
+          <span class="header-username"><%= currentUsername %></span>
+          <a href="/lobby" class="btn-link">← Back to Lobby</a>
+        </div>
       </div>
 
       <!-- Main Game Layout: Game Board + Chat -->

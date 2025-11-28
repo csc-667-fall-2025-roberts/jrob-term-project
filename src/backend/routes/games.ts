@@ -53,13 +53,14 @@ router.post("/", async (request, response) => {
 
 router.get("/:id", async (request, response) => {
   const gameId = parseInt(request.params.id);
-  const currentUserId = request.session.user!.id;
+  const user = request.session.user!;
 
   const game = await Games.get(gameId);
 
   response.render("games/game", {
     ...game,
-    currentUserId,
+    currentUserId: user.id,
+    currentUsername: user.username,
   });
 });
 
