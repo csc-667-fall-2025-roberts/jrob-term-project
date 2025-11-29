@@ -17,6 +17,11 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
       references: "users(id)",
       onDelete: "CASCADE",
     },
+    position: {
+      type: PgType.INTEGER,
+      notNull: false, // NULL until game starts and turn order is set
+      comment: "Turn position (0 = first player), NULL if game not started",
+    },
   });
 
   pgm.addConstraint(TABLE_NAME, "unique_game_user", {
