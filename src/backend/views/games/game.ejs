@@ -31,6 +31,14 @@
       <div class="game-layout">
         <!-- Left: Game Board -->
         <div class="game-main">
+          <!-- Lobby Overlay - shown when game is in lobby state -->
+          <div class="lobby-overlay<%= state === 'lobby' ? '' : ' hidden' %>" id="lobby-overlay">
+            <div class="lobby-overlay-content">
+              <h2>Waiting for Players</h2>
+              <p>Game will start when the host clicks the button below.</p>
+              <button class="btn-primary btn-large" id="start-game-btn">Start Game</button>
+            </div>
+          </div>
           <!-- Opponents Area -->
           <div class="opponents-area">
             <% if (typeof players !== 'undefined' && players && players.length > 0) { %>
@@ -50,7 +58,7 @@
                 </div>
               <% }) %>
             <% } else { %>
-              <!-- PLACEHOLDER: Remove this else block after Session 2 wires up players -->
+              <!-- PLACEHOLDER: Remove this else block after Section 2 wires up players -->
               <div class="opponent-card" data-user-id="0">
                 <h3>
                   <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=kenji" alt="" class="player-avatar player-2" />
@@ -149,7 +157,7 @@
 
             <div class="player-hand">
               <% if (typeof myCards === 'undefined') { %>
-                <!-- PLACEHOLDER: Remove this if block after Session 1 wires up myCards -->
+                <!-- PLACEHOLDER: Remove this if block after Section 2 wires up myCards -->
                 <div class="playing-card suit-H rank-A" data-rank="A"></div>
                 <div class="playing-card suit-D rank-5" data-rank="5"></div>
                 <div class="playing-card suit-C rank-5" data-rank="5"></div>

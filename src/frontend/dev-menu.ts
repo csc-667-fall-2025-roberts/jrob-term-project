@@ -56,6 +56,11 @@ function createDevMenu() {
       </div>
 
       <div class="dev-menu-section">
+        <h4>Game State</h4>
+        <button data-action="toggle-lobby">Toggle Lobby Overlay</button>
+      </div>
+
+      <div class="dev-menu-section">
         <h4>Keyboard Shortcuts</h4>
         <div class="dev-menu-help">
           <kbd>\`</kbd> Toggle menu<br>
@@ -63,7 +68,8 @@ function createDevMenu() {
           <kbd>S</kbd> Select card<br>
           <kbd>D</kbd> Deal animation<br>
           <kbd>C</kbd> Confetti<br>
-          <kbd>B</kbd> Complete book
+          <kbd>B</kbd> Complete book<br>
+          <kbd>L</kbd> Toggle lobby overlay
         </div>
       </div>
     </div>
@@ -122,6 +128,10 @@ function setupKeyboardShortcuts() {
       case "b":
       case "B":
         handleAction("complete-book");
+        break;
+      case "l":
+      case "L":
+        handleAction("toggle-lobby");
         break;
     }
   });
@@ -189,6 +199,11 @@ function handleAction(action: string) {
       break;
     case "confetti":
       createConfetti();
+      break;
+
+    // Game state
+    case "toggle-lobby":
+      document.getElementById("lobby-overlay")?.classList.toggle("hidden");
       break;
   }
 }
