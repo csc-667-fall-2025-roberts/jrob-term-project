@@ -30,12 +30,6 @@ export enum GameState {
   COMPLETED = "completed",
 }
 
-export type GamePlayer = {
-  user_id: number;
-  username: string;
-  email: string;
-};
-
 export type Game = {
   id: number;
   name?: string;
@@ -46,4 +40,10 @@ export type Game = {
   current_turn_user_id?: number;
   player_count?: number;
   players?: GamePlayer[];
+};
+
+export type GamePlayer = {
+  user_id: number;
+  username: string;
+  email: string;
 };
