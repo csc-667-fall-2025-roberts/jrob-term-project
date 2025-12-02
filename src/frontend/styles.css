@@ -146,6 +146,12 @@ h2 {
   background: var(--color-primary-hover);
 }
 
+.btn-primary:disabled {
+  background: var(--color-text-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 /* Forms */
 .form-group {
   display: flex;

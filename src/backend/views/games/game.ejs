@@ -35,12 +35,20 @@
           <div class="lobby-overlay<%= state === 'lobby' ? '' : ' hidden' %>" id="lobby-overlay">
             <div class="lobby-overlay-content">
               <h2>Waiting for Players</h2>
-              <% const playerCount = (typeof players !== 'undefined' && players) ? players.length : 1; %>
-              <% const canStart = playerCount >= 2; %>
-              <p><%= canStart ? 'Ready to start!' : `Need at least 2 players (${playerCount}/2)` %></p>
-              <form method="POST" action="/games/<%= id %>/start">
-                <button type="submit" class="btn-primary btn-large" <%= canStart ? '' : 'disabled' %>>Start Game</button>
-              </form>
+              <%
+                const isHost = created_by === currentUserId;
+                const hasPlayers = typeof players !== 'undefined' && players;
+                const playerCount = hasPlayers ? players.length : 1;
+                const canStart = !hasPlayers || playerCount >= 2; // enabled if players not wired up yet
+              %>
+              <% if (isHost) { %>
+                <p><%= canStart ? 'Ready to start!' : `Need at least 2 players (${playerCount}/2)` %></p>
+                <form method="POST" action="/games/<%= id %>/start">
+                  <button type="submit" class="btn-primary btn-large" <%= canStart ? '' : 'disabled' %>>Start Game</button>
+                </form>
+              <% } else { %>
+                <p>Waiting for host to start the game...</p>
+              <% } %>
             </div>
           </div>
           <!-- Opponents Area -->
