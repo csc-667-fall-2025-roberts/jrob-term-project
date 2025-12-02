@@ -7,7 +7,7 @@ import * as PlayerBooks from "@backend/db/player-books";
 import { generateGameName } from "@backend/lib/game-names";
 import logger from "@backend/lib/logger";
 import { askForCards, startGame } from "@backend/services/game-service";
-import { broadcastJoin } from "@backend/sockets/game-socket"; /** NEW */
+import { broadcastAskResult, broadcastGameStarted, broadcastJoin } from "@backend/sockets/game-socket"; /** NEW: added broadcastGameStarted, broadcastAskResult */
 import { GAME_CREATE, GAME_LISTING } from "@shared/keys";
 
 const router = express.Router();
@@ -81,7 +81,7 @@ router.get("/:id", async (request, response) => {
   });
 });
 
-/** NEW: Join route with broadcast */
+// Join route with broadcast
 router.post("/:game_id/join", async (request, response) => {
   const { id } = request.session.user!;
   const { game_id } = request.params;
@@ -94,12 +94,16 @@ router.post("/:game_id/join", async (request, response) => {
 
   response.redirect(`/games/${game_id}`);
 });
-/** END NEW */
 
+/** NEW: Start game route with broadcast */
 router.post("/:id/start", async (request, response) => {
   try {
     const gameId = parseInt(request.params.id);
-    await startGame(gameId);
+    const { firstPlayerId } = await startGame(gameId);
+
+    const io = request.app.get("io") as Server;
+    broadcastGameStarted(io, gameId, firstPlayerId);
+
     response.redirect(`/games/${gameId}`);
   } catch (error: any) {
     logger.error("Error starting game:", error);
@@ -107,7 +111,7 @@ router.post("/:id/start", async (request, response) => {
   }
 });
 
-// Ask for cards route
+// Ask for cards route with broadcast
 router.post("/:id/ask", async (request, response) => {
   try {
     const gameId = parseInt(request.params.id);
@@ -115,11 +119,16 @@ router.post("/:id/ask", async (request, response) => {
     const { targetUserId, rank } = request.body;
 
     const result = await askForCards(gameId, askerId, targetUserId, rank);
+
+    const io = request.app.get("io") as Server;
+    broadcastAskResult(io, gameId, askerId, targetUserId, rank, result);
+
     response.json(result);
   } catch (error: any) {
     logger.error("Error asking for cards:", error);
     response.status(500).json({ error: error.message });
   }
 });
+/** END NEW */
 
 export default router;

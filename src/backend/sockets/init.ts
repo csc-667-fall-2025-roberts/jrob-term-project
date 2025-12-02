@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 
 import { sessionMiddleware } from "@backend/config/session";
 import logger from "@backend/lib/logger";
-import { initGameSocket } from "@backend/sockets/game-socket"; /** NEW */
+import { initGameSocket } from "@backend/sockets/game-socket";
 import { GLOBAL_ROOM } from "@shared/keys";
 import { User } from "@shared/types";
 
@@ -21,12 +21,11 @@ export const initSockets = (httpServer: HTTPServer) => {
     socket.join(session.id);
     socket.join(GLOBAL_ROOM);
 
-    /** NEW: Join game room if gameId provided */
+    // Join game room if gameId provided
     const gameId = socket.handshake.query.gameId as string;
     if (gameId) {
       initGameSocket(socket, parseInt(gameId), session.user.id);
     }
-    /** END NEW */
 
     socket.on("close", () => {
       logger.info(`socket for user ${session.user.username} closed`);
