@@ -10,8 +10,6 @@ import {
   initializeCardSelection,
   initializeOpponentInteraction,
 } from "./game/card-selection";
-import type { GameStateUpdate } from "./game/types";
-import { updateDeckCount, updatePlayerHand, updateTurnIndicator } from "./game/ui-updates";
 
 // Get game ID from server-rendered data attribute
 const gameId = document.body.dataset.gameId || "";
@@ -19,18 +17,10 @@ const gameId = document.body.dataset.gameId || "";
 // Connect with gameId so server joins us to the game room
 const socket = socketIo({ query: { gameId } });
 
-// Refresh when another player joins
-socket.on("player:joined", () => {
-  window.location.reload();
-});
-
-// Handle game state updates from server
-socket.on("game:state", (newState: GameStateUpdate) => {
-  console.log("Game state update:", newState);
-  updateDeckCount(newState.deckCount);
-  updatePlayerHand(newState.myCards);
-  updateTurnIndicator(newState.isMyTurn, newState.currentTurnUserId);
-});
+// Reload page when game state changes (dumb frontend pattern)
+socket.on("player:joined", () => window.location.reload());
+socket.on("game:started", () => window.location.reload());
+socket.on("game:ask-result", () => window.location.reload());
 
 /**
  * Ask an opponent for cards of a specific rank
