@@ -56,7 +56,7 @@ UPDATE games SET state = 'active', current_turn_user_id = $2
 WHERE id = $1
 `;
 
-/** NEW: Get players with stats - COUNT(DISTINCT) prevents double-counting from JOINs */
+// Get players with stats - COUNT(DISTINCT) prevents double-counting from JOINs
 export const GET_PLAYERS_WITH_STATS = `
 SELECT
   u.id as user_id, u.username, u.email, gp.position,
@@ -70,4 +70,3 @@ WHERE gp.game_id = $1
 GROUP BY u.id, u.username, u.email, gp.position
 ORDER BY gp.position NULLS LAST
 `;
-/** END NEW */

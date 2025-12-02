@@ -3,10 +3,10 @@ import { Server } from "socket.io";
 
 import * as GameCards from "@backend/db/game-cards";
 import * as Games from "@backend/db/games";
-import * as PlayerBooks from "@backend/db/player-books"; /** NEW */
+import * as PlayerBooks from "@backend/db/player-books";
 import { generateGameName } from "@backend/lib/game-names";
 import logger from "@backend/lib/logger";
-import { startGame } from "@backend/services/game-service";
+import { askForCards, startGame } from "@backend/services/game-service"; /** NEW: added askForCards */
 import { GAME_CREATE, GAME_LISTING } from "@shared/keys";
 
 const router = express.Router();
@@ -64,20 +64,19 @@ router.get("/:id", async (request, response) => {
   const myCards = await GameCards.getCardsByOwner(gameId, user.id);
   const cards = myCards.map((c) => ({ rank: c.rank, suit: c.suit }));
 
-  /** NEW: Fetch game state - deck count, players, books */
+  // Fetch game state - deck count, players, books
   const deckCount = await GameCards.countByOwner(gameId, 0);
   const players = await Games.getPlayersWithStats(gameId);
   const allBooks = await PlayerBooks.getByGame(gameId);
-  /** END NEW */
 
   response.render("games/game", {
     ...game,
     currentUserId: user.id,
     currentUsername: user.username,
     cards,
-    deckCount, /** NEW */
-    players, /** NEW */
-    allBooks, /** NEW */
+    deckCount,
+    players,
+    allBooks,
   });
 });
 
@@ -100,5 +99,21 @@ router.post("/:id/start", async (request, response) => {
     response.redirect(`/games/${request.params.id}`);
   }
 });
+
+/** NEW: Ask for cards route */
+router.post("/:id/ask", async (request, response) => {
+  try {
+    const gameId = parseInt(request.params.id);
+    const askerId = request.session.user!.id;
+    const { targetUserId, rank } = request.body;
+
+    const result = await askForCards(gameId, askerId, targetUserId, rank);
+    response.json(result);
+  } catch (error: any) {
+    logger.error("Error asking for cards:", error);
+    response.status(500).json({ error: error.message });
+  }
+});
+/** END NEW */
 
 export default router;

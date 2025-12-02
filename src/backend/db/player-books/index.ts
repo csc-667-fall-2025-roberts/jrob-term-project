@@ -1,4 +1,4 @@
-/** NEW: Player books module */
+// Player books module
 import db from "../connection";
 import { CREATE_BOOK, GET_BOOKS_BY_GAME } from "./sql";
 
@@ -16,4 +16,3 @@ export const getByGame = async (gameId: number) =>
 
 export const create = async (gameId: number, userId: number, rank: string) =>
   await db.one<PlayerBook>(CREATE_BOOK, [gameId, userId, rank]);
-/** END NEW */

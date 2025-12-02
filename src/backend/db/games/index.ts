@@ -38,7 +38,7 @@ const setPlayerPosition = async (gameId: number, userId: number, position: numbe
 const start = async (gameId: number, firstPlayerId: number) =>
   await db.none(START_GAME, [gameId, firstPlayerId]);
 
-/** NEW: Player stats type and query */
+// Player stats type and query
 export type PlayerWithStats = {
   user_id: number;
   username: string;
@@ -59,6 +59,5 @@ const getPlayersWithStats = async (gameId: number): Promise<PlayerWithStats[]> =
     book_count: parseInt(r.book_count as unknown as string),
   }));
 };
-/** END NEW */
 
 export { create, get, getByUser, getPlayerIds, getPlayersWithStats, join, list, setPlayerPosition, start };

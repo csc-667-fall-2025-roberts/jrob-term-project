@@ -1,4 +1,4 @@
-/** NEW: Player books queries */
+// Player books queries
 export const GET_BOOKS_BY_GAME = `
 SELECT pb.*, u.username
 FROM player_books pb
@@ -12,4 +12,3 @@ INSERT INTO player_books (game_id, user_id, rank)
 VALUES ($1, $2, $3)
 RETURNING *
 `;
-/** END NEW */

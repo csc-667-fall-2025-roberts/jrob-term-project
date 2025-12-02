@@ -1,4 +1,4 @@
-/** NEW: Game service - business logic layer (Routes → Services → DB) */
+// Game service - business logic layer (Routes → Services → DB)
 import * as GameCards from "@backend/db/game-cards";
 import * as Games from "@backend/db/games";
 
@@ -44,5 +44,32 @@ export async function startGame(gameId: number): Promise<{ firstPlayerId: number
   await Games.start(gameId, shuffledPlayers[0]);
 
   return { firstPlayerId: shuffledPlayers[0] };
+}
+
+/** NEW: Ask for cards - Go Fish game action */
+export type AskResult = {
+  success: boolean;
+  cardsReceived: number;
+  drewCard: boolean;
+};
+
+export async function askForCards(
+  gameId: number,
+  askerId: number,
+  targetId: number,
+  rank: string,
+): Promise<AskResult> {
+  // Check if target has cards of that rank
+  const cardIds = await GameCards.getCardsByOwnerAndRank(gameId, targetId, rank);
+
+  if (cardIds.length > 0) {
+    // Transfer cards to asker
+    await GameCards.transferCards(cardIds, askerId);
+    return { success: true, cardsReceived: cardIds.length, drewCard: false };
+  } else {
+    // Go Fish - draw from deck
+    const drawnId = await GameCards.drawCard(gameId, askerId);
+    return { success: false, cardsReceived: 0, drewCard: drawnId !== null };
+  }
 }
 /** END NEW */
