@@ -1,10 +1,11 @@
 import express from "express";
 import { Server } from "socket.io";
 
+import * as GameCards from "@backend/db/game-cards"; /** NEW */
 import * as Games from "@backend/db/games";
 import { generateGameName } from "@backend/lib/game-names";
 import logger from "@backend/lib/logger";
-import { startGame } from "@backend/services/game-service"; /** NEW */
+import { startGame } from "@backend/services/game-service";
 import { GAME_CREATE, GAME_LISTING } from "@shared/keys";
 
 const router = express.Router();
@@ -58,10 +59,16 @@ router.get("/:id", async (request, response) => {
 
   const game = await Games.get(gameId);
 
+  /** NEW: Fetch player's cards */
+  const myCards = await GameCards.getCardsByOwner(gameId, user.id);
+  const cards = myCards.map((c) => ({ rank: c.rank, suit: c.suit }));
+  /** END NEW */
+
   response.render("games/game", {
     ...game,
     currentUserId: user.id,
     currentUsername: user.username,
+    cards, /** NEW */
   });
 });
 
@@ -74,7 +81,6 @@ router.post("/:game_id/join", async (request, response) => {
   response.redirect(`/games/${game_id}`);
 });
 
-/** NEW: Start game route */
 router.post("/:id/start", async (request, response) => {
   try {
     const gameId = parseInt(request.params.id);
@@ -85,6 +91,5 @@ router.post("/:id/start", async (request, response) => {
     response.redirect(`/games/${request.params.id}`);
   }
 });
-/** END NEW */
 
 export default router;
