@@ -4,3 +4,7 @@ export const CHAT_LISTING = "chat:listing";
 
 export const GAME_LISTING = "games:listing";
 export const GAME_CREATE = "games:created";
+
+/** NEW: Game room events */
+export const PLAYER_JOINED = "player:joined";
+/** END NEW */

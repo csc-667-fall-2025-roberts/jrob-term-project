@@ -6,7 +6,8 @@ import * as Games from "@backend/db/games";
 import * as PlayerBooks from "@backend/db/player-books";
 import { generateGameName } from "@backend/lib/game-names";
 import logger from "@backend/lib/logger";
-import { askForCards, startGame } from "@backend/services/game-service"; /** NEW: added askForCards */
+import { askForCards, startGame } from "@backend/services/game-service";
+import { broadcastJoin } from "@backend/sockets/game-socket"; /** NEW */
 import { GAME_CREATE, GAME_LISTING } from "@shared/keys";
 
 const router = express.Router();
@@ -80,14 +81,20 @@ router.get("/:id", async (request, response) => {
   });
 });
 
+/** NEW: Join route with broadcast */
 router.post("/:game_id/join", async (request, response) => {
   const { id } = request.session.user!;
   const { game_id } = request.params;
+  const gameId = parseInt(game_id);
 
-  await Games.join(parseInt(game_id), id);
+  await Games.join(gameId, id);
+
+  const io = request.app.get("io") as Server;
+  broadcastJoin(io, gameId);
 
   response.redirect(`/games/${game_id}`);
 });
+/** END NEW */
 
 router.post("/:id/start", async (request, response) => {
   try {
@@ -100,7 +107,7 @@ router.post("/:id/start", async (request, response) => {
   }
 });
 
-/** NEW: Ask for cards route */
+// Ask for cards route
 router.post("/:id/ask", async (request, response) => {
   try {
     const gameId = parseInt(request.params.id);
@@ -114,6 +121,5 @@ router.post("/:id/ask", async (request, response) => {
     response.status(500).json({ error: error.message });
   }
 });
-/** END NEW */
 
 export default router;
