@@ -35,9 +35,11 @@
           <div class="lobby-overlay<%= state === 'lobby' ? '' : ' hidden' %>" id="lobby-overlay">
             <div class="lobby-overlay-content">
               <h2>Waiting for Players</h2>
-              <p>Game will start when the host clicks the button below.</p>
+              <% const playerCount = (typeof players !== 'undefined' && players) ? players.length : 1; %>
+              <% const canStart = playerCount >= 2; %>
+              <p><%= canStart ? 'Ready to start!' : `Need at least 2 players (${playerCount}/2)` %></p>
               <form method="POST" action="/games/<%= id %>/start">
-                <button type="submit" class="btn-primary btn-large">Start Game</button>
+                <button type="submit" class="btn-primary btn-large" <%= canStart ? '' : 'disabled' %>>Start Game</button>
               </form>
             </div>
           </div>
