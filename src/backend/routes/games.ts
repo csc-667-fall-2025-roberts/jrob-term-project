@@ -4,6 +4,7 @@ import { Server } from "socket.io";
 import * as Games from "@backend/db/games";
 import { generateGameName } from "@backend/lib/game-names";
 import logger from "@backend/lib/logger";
+import { startGame } from "@backend/services/game-service"; /** NEW */
 import { GAME_CREATE, GAME_LISTING } from "@shared/keys";
 
 const router = express.Router();
@@ -72,5 +73,18 @@ router.post("/:game_id/join", async (request, response) => {
 
   response.redirect(`/games/${game_id}`);
 });
+
+/** NEW: Start game route */
+router.post("/:id/start", async (request, response) => {
+  try {
+    const gameId = parseInt(request.params.id);
+    await startGame(gameId);
+    response.redirect(`/games/${gameId}`);
+  } catch (error: any) {
+    logger.error("Error starting game:", error);
+    response.redirect(`/games/${request.params.id}`);
+  }
+});
+/** END NEW */
 
 export default router;

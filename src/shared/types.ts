@@ -42,8 +42,22 @@ export type Game = {
   players?: GamePlayer[];
 };
 
+/** NEW: added position for turn order */
 export type GamePlayer = {
   user_id: number;
   username: string;
   email: string;
+  position?: number;
 };
+
+/** NEW: GameCard - tracks card ownership and position */
+export interface GameCard {
+  id: number;
+  game_id: number;
+  card_id: number;
+  owner_id: number; // 0 = deck, >0 = player's hand
+  position?: number;
+  rank?: string;
+  suit?: string;
+}
+/** END NEW */

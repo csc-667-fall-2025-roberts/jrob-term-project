@@ -40,3 +40,19 @@ WHERE game_players.game_id=games.id AND user_id=$1
 export const GAME_BY_ID = `
   SELECT * FROM games WHERE id=$1
 `;
+
+/** NEW: Start game queries */
+export const GET_PLAYER_IDS = `
+SELECT user_id FROM game_players WHERE game_id = $1
+`;
+
+export const SET_PLAYER_POSITION = `
+UPDATE game_players SET position = $3
+WHERE game_id = $1 AND user_id = $2
+`;
+
+export const START_GAME = `
+UPDATE games SET state = 'active', current_turn_user_id = $2
+WHERE id = $1
+`;
+/** END NEW */
