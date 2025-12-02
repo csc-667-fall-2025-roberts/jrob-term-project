@@ -13,7 +13,13 @@ export const initSockets = (httpServer: HTTPServer) => {
 
   io.on("connection", (socket) => {
     // @ts-expect-error session is attached by middleware
-    const session = socket.request.session as { id: string; user: User };
+    const session = socket.request.session as { id: string; user?: User };
+
+    // Guard against invalid/expired sessions
+    if (!session.user) {
+      socket.disconnect();
+      return;
+    }
 
     logger.info(`socket for user ${session.user.username} established`);
 
@@ -21,7 +27,7 @@ export const initSockets = (httpServer: HTTPServer) => {
     socket.join(GLOBAL_ROOM);
 
     socket.on("close", () => {
-      logger.info(`socket for user ${session.user.username} closed`);
+      logger.info(`socket for user ${session.user!.username} closed`);
     });
   });
 
