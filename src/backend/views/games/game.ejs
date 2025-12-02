@@ -36,7 +36,9 @@
             <div class="lobby-overlay-content">
               <h2>Waiting for Players</h2>
               <p>Game will start when the host clicks the button below.</p>
-              <button class="btn-primary btn-large" id="start-game-btn">Start Game</button>
+              <form method="POST" action="/games/<%= id %>/start">
+                <button type="submit" class="btn-primary btn-large">Start Game</button>
+              </form>
             </div>
           </div>
           <!-- Opponents Area -->
