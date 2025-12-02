@@ -6,6 +6,7 @@ import {
   GAME_BY_ID,
   GAMES_BY_USER,
   GET_PLAYER_IDS,
+  GET_PLAYERS_WITH_STATS,
   JOIN_GAME,
   LIST_GAMES,
   SET_PLAYER_POSITION,
@@ -25,7 +26,7 @@ const getByUser = async (user_id: number) => await db.manyOrNone<Game>(GAMES_BY_
 
 const get = async (game_id: number) => await db.one<Game>(GAME_BY_ID, [game_id]);
 
-/** NEW: Start game functions */
+// Start game functions
 const getPlayerIds = async (gameId: number): Promise<number[]> => {
   const rows = await db.manyOrNone<{ user_id: number }>(GET_PLAYER_IDS, [gameId]);
   return rows.map((r) => r.user_id);
@@ -36,6 +37,28 @@ const setPlayerPosition = async (gameId: number, userId: number, position: numbe
 
 const start = async (gameId: number, firstPlayerId: number) =>
   await db.none(START_GAME, [gameId, firstPlayerId]);
+
+/** NEW: Player stats type and query */
+export type PlayerWithStats = {
+  user_id: number;
+  username: string;
+  email: string;
+  position?: number;
+  card_count: number;
+  book_count: number;
+};
+
+const getPlayersWithStats = async (gameId: number): Promise<PlayerWithStats[]> => {
+  const rows = await db.manyOrNone<PlayerWithStats & { card_count: string; book_count: string }>(
+    GET_PLAYERS_WITH_STATS,
+    [gameId],
+  );
+  return rows.map((r) => ({
+    ...r,
+    card_count: parseInt(r.card_count as unknown as string),
+    book_count: parseInt(r.book_count as unknown as string),
+  }));
+};
 /** END NEW */
 
-export { create, get, getByUser, getPlayerIds, join, list, setPlayerPosition, start };
+export { create, get, getByUser, getPlayerIds, getPlayersWithStats, join, list, setPlayerPosition, start };

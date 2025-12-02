@@ -19,12 +19,18 @@ UPDATE game_cards SET owner_id = $2, position = NULL
 WHERE id = ANY($1)
 `;
 
-/** NEW: Get player's cards with rank/suit (joins cards reference table) */
+// Get player's cards with rank/suit (joins cards reference table)
 export const GET_CARDS_BY_OWNER = `
 SELECT gc.id, gc.game_id, gc.card_id, gc.owner_id, c.rank, c.suit
 FROM game_cards gc
 JOIN cards c ON gc.card_id = c.id
 WHERE gc.game_id = $1 AND gc.owner_id = $2
 ORDER BY c.sort_order
+`;
+
+/** NEW: Count cards by owner (for deck size or hand count) */
+export const COUNT_BY_OWNER = `
+SELECT COUNT(*) FROM game_cards
+WHERE game_id = $1 AND owner_id = $2
 `;
 /** END NEW */

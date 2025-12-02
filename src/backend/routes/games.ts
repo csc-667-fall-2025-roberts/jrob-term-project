@@ -1,8 +1,9 @@
 import express from "express";
 import { Server } from "socket.io";
 
-import * as GameCards from "@backend/db/game-cards"; /** NEW */
+import * as GameCards from "@backend/db/game-cards";
 import * as Games from "@backend/db/games";
+import * as PlayerBooks from "@backend/db/player-books"; /** NEW */
 import { generateGameName } from "@backend/lib/game-names";
 import logger from "@backend/lib/logger";
 import { startGame } from "@backend/services/game-service";
@@ -59,16 +60,24 @@ router.get("/:id", async (request, response) => {
 
   const game = await Games.get(gameId);
 
-  /** NEW: Fetch player's cards */
+  // Fetch player's cards
   const myCards = await GameCards.getCardsByOwner(gameId, user.id);
   const cards = myCards.map((c) => ({ rank: c.rank, suit: c.suit }));
+
+  /** NEW: Fetch game state - deck count, players, books */
+  const deckCount = await GameCards.countByOwner(gameId, 0);
+  const players = await Games.getPlayersWithStats(gameId);
+  const allBooks = await PlayerBooks.getByGame(gameId);
   /** END NEW */
 
   response.render("games/game", {
     ...game,
     currentUserId: user.id,
     currentUsername: user.username,
-    cards, /** NEW */
+    cards,
+    deckCount, /** NEW */
+    players, /** NEW */
+    allBooks, /** NEW */
   });
 });
 

@@ -10,7 +10,7 @@ VALUES ($1, $2)
 `;
 
 export const LIST_GAMES = `
-SELECT 
+SELECT
   g.*,
   COUNT(gp.id) AS player_count,
   COALESCE(
@@ -41,7 +41,7 @@ export const GAME_BY_ID = `
   SELECT * FROM games WHERE id=$1
 `;
 
-/** NEW: Start game queries */
+// Start game queries
 export const GET_PLAYER_IDS = `
 SELECT user_id FROM game_players WHERE game_id = $1
 `;
@@ -54,5 +54,20 @@ WHERE game_id = $1 AND user_id = $2
 export const START_GAME = `
 UPDATE games SET state = 'active', current_turn_user_id = $2
 WHERE id = $1
+`;
+
+/** NEW: Get players with stats - COUNT(DISTINCT) prevents double-counting from JOINs */
+export const GET_PLAYERS_WITH_STATS = `
+SELECT
+  u.id as user_id, u.username, u.email, gp.position,
+  COUNT(DISTINCT gc.id) as card_count,
+  COUNT(DISTINCT pb.id) as book_count
+FROM game_players gp
+JOIN users u ON gp.user_id = u.id
+LEFT JOIN game_cards gc ON gc.game_id = gp.game_id AND gc.owner_id = u.id
+LEFT JOIN player_books pb ON pb.game_id = gp.game_id AND pb.user_id = u.id
+WHERE gp.game_id = $1
+GROUP BY u.id, u.username, u.email, gp.position
+ORDER BY gp.position NULLS LAST
 `;
 /** END NEW */
