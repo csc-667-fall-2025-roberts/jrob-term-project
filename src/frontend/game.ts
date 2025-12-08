@@ -17,7 +17,23 @@ const gameId = document.body.dataset.gameId || "";
 // Connect with gameId so server joins us to the game room
 const socket = socketIo({ query: { gameId } });
 
-// Reload page when game state changes (dumb frontend pattern)
+/**
+ * TODO: Replace these reloads with proper DOM updates.
+ *
+ * Using window.location.reload() is PLACEHOLDER logic while we finalize
+ * the backend and game logic. This is NOT the correct approach for a
+ * real-time application!
+ *
+ * The proper unidirectional data flow pattern:
+ * 1. Server broadcasts new state (e.g., updated player list, cards, turn info)
+ * 2. Frontend receives broadcast and updates DOM directly - NO reload
+ *
+ * Example of correct approach:
+ *   socket.on("game:started", ({ currentTurnUserId }) => {
+ *     document.getElementById("lobby-overlay")?.classList.add("hidden");
+ *     updateTurnIndicator(currentTurnUserId);
+ *   });
+ */
 socket.on("player:joined", () => window.location.reload());
 socket.on("game:started", () => window.location.reload());
 socket.on("game:ask-result", () => window.location.reload());
