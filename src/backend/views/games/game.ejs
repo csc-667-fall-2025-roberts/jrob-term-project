@@ -16,12 +16,14 @@
         <h1>
           <span class="fish-logo">🐟</span>
           <%= name || `Game ${id}` %>
-          <span class="game-meta-info">
-            • <%= state %> • <%= max_players %> players max
-          </span>
+          <span class="game-meta-info"> • <%= state %> • <%= max_players %> players max </span>
         </h1>
         <div class="header-user">
-          <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= currentUsername %>" alt="" class="header-avatar" />
+          <img
+            src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= currentUsername %>"
+            alt=""
+            class="header-avatar"
+          />
           <span class="header-username"><%= currentUsername %></span>
           <a href="/lobby" class="btn-link">← Back to Lobby</a>
         </div>
@@ -35,83 +37,104 @@
           <div class="lobby-overlay<%= state === 'lobby' ? '' : ' hidden' %>" id="lobby-overlay">
             <div class="lobby-overlay-content">
               <h2>Waiting for Players</h2>
-              <%
-                const isHost = created_by === currentUserId;
-                const hasPlayers = typeof players !== 'undefined' && players;
-                const playerCount = hasPlayers ? players.length : 1;
-                const canStart = !hasPlayers || playerCount >= 2; // enabled if players not wired up yet
-              %>
+              <% const isHost = created_by === currentUserId; const hasPlayers = typeof players !==
+              'undefined' && players; const playerCount = hasPlayers ? players.length : 1; const
+              canStart = !hasPlayers || playerCount >= 2; // enabled if players not wired up yet %>
               <% if (isHost) { %>
-                <p><%= canStart ? 'Ready to start!' : `Need at least 2 players (${playerCount}/2)` %></p>
-                <form method="POST" action="/games/<%= id %>/start">
-                  <button type="submit" class="btn-primary btn-large" <%= canStart ? '' : 'disabled' %>>Start Game</button>
-                </form>
+              <p>
+                <%= canStart ? 'Ready to start!' : `Need at least 2 players (${playerCount}/2)` %>
+              </p>
+              <form method="POST" action="/games/<%= id %>/start">
+                <% if (canStart) { %>
+                <button type="submit" class="btn-primary btn-large">Start Game</button>
+                <% } else { %>
+                <button type="submit" class="btn-primary btn-large" disabled>Start Game</button>
+                <% } %>
+              </form>
               <% } else { %>
-                <p>Waiting for host to start the game...</p>
+              <p>Waiting for host to start the game...</p>
               <% } %>
             </div>
           </div>
           <!-- Opponents Area -->
           <div class="opponents-area">
             <% if (typeof players !== 'undefined' && players && players.length > 0) { %>
-              <!-- Real opponents from data -->
-              <% players.filter(p => p.user_id !== currentUserId).forEach((player, i) => { %>
-                <div class="opponent-card" data-user-id="<%= player.user_id %>">
-                  <h3>
-                    <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= player.username %>" alt="" class="player-avatar player-<%= (i % 4) + 2 %>" />
-                    <%= player.username %>
-                  </h3>
-                  <div class="opponent-hand">
-                    <% for (let j = 0; j < (player.card_count || 0); j++) { %>
-                      <div class="playing-card back"></div>
-                    <% } %>
-                  </div>
-                  <div class="opponent-stats"><%= player.card_count || 0 %> cards • <%= player.book_count || 0 %> books</div>
-                </div>
-              <% }) %>
+            <!-- Real opponents from data -->
+            <% players.filter(p => p.user_id !== currentUserId).forEach((player, i) => { %>
+            <div class="opponent-card" data-user-id="<%= player.user_id %>">
+              <h3>
+                <img
+                  src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= player.username %>"
+                  alt=""
+                  class="player-avatar player-<%= (i % 4) + 2 %>"
+                />
+                <%= player.username %>
+              </h3>
+              <div class="opponent-hand">
+                <% for (let j = 0; j < (player.card_count || 0); j++) { %>
+                <div class="playing-card back"></div>
+                <% } %>
+              </div>
+              <div class="opponent-stats">
+                <%= player.card_count || 0 %> cards • <%= player.book_count || 0 %> books
+              </div>
+            </div>
+            <% }) %>
             <% } else { %>
-              <!-- PLACEHOLDER: Remove this else block after Section 2 wires up players -->
-              <div class="opponent-card" data-user-id="0">
-                <h3>
-                  <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=kenji" alt="" class="player-avatar player-2" />
-                  kenji
-                </h3>
-                <div class="opponent-hand">
-                  <div class="playing-card back"></div>
-                  <div class="playing-card back"></div>
-                  <div class="playing-card back"></div>
-                  <div class="playing-card back"></div>
-                  <div class="playing-card back"></div>
-                </div>
-                <div class="opponent-stats">5 cards • 0 books</div>
+            <!-- PLACEHOLDER: Remove this else block after Section 2 wires up players -->
+            <div class="opponent-card" data-user-id="0">
+              <h3>
+                <img
+                  src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=kenji"
+                  alt=""
+                  class="player-avatar player-2"
+                />
+                kenji
+              </h3>
+              <div class="opponent-hand">
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
               </div>
+              <div class="opponent-stats">5 cards • 0 books</div>
+            </div>
 
-              <div class="opponent-card" data-user-id="0">
-                <h3>
-                  <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=priya" alt="" class="player-avatar player-3" />
-                  priya
-                </h3>
-                <div class="opponent-hand">
-                  <div class="playing-card back"></div>
-                  <div class="playing-card back"></div>
-                  <div class="playing-card back"></div>
-                </div>
-                <div class="opponent-stats">3 cards • 1 book</div>
+            <div class="opponent-card" data-user-id="0">
+              <h3>
+                <img
+                  src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=priya"
+                  alt=""
+                  class="player-avatar player-3"
+                />
+                priya
+              </h3>
+              <div class="opponent-hand">
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
               </div>
+              <div class="opponent-stats">3 cards • 1 book</div>
+            </div>
 
-              <div class="opponent-card" data-user-id="0">
-                <h3>
-                  <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=omar" alt="" class="player-avatar player-4" />
-                  omar
-                </h3>
-                <div class="opponent-hand">
-                  <div class="playing-card back"></div>
-                  <div class="playing-card back"></div>
-                  <div class="playing-card back"></div>
-                  <div class="playing-card back"></div>
-                </div>
-                <div class="opponent-stats">4 cards • 0 books</div>
+            <div class="opponent-card" data-user-id="0">
+              <h3>
+                <img
+                  src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=omar"
+                  alt=""
+                  class="player-avatar player-4"
+                />
+                omar
+              </h3>
+              <div class="opponent-hand">
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
+                <div class="playing-card back"></div>
               </div>
+              <div class="opponent-stats">4 cards • 0 books</div>
+            </div>
             <% } %>
           </div>
 
@@ -123,64 +146,72 @@
                 <div class="playing-card back"></div>
               </div>
               <% if (typeof deckCount !== 'undefined') { %>
-                <div class="deck-count"><%= deckCount %> cards remaining</div>
+              <div class="deck-count"><%= deckCount %> cards remaining</div>
               <% } else { %>
-                <div class="deck-count">28 cards remaining</div>
+              <div class="deck-count">28 cards remaining</div>
               <% } %>
             </div>
 
             <div class="all-books-section">
-              <%
-                const allRanks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-                const completedBooks = (typeof allBooks !== 'undefined' && allBooks) ? allBooks : [];
-                const bookCount = completedBooks.length;
-              %>
+              <% const allRanks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q',
+              'K']; const completedBooks = (typeof allBooks !== 'undefined' && allBooks) ? allBooks
+              : []; const bookCount = completedBooks.length; %>
               <h3>All Books (<%= bookCount %>/13 Complete)</h3>
               <div class="books-list">
-                <% allRanks.forEach(rank => { %>
-                  <% const book = completedBooks.find(b => b.rank === rank); %>
-                  <% if (book) { %>
-                    <span class="book-badge completed" title="<%= book.username %>"><%= rank %></span>
-                  <% } else { %>
-                    <span class="book-badge placeholder"><%= rank %></span>
-                  <% } %>
+                <% allRanks.forEach(rank => { %> <% const book = completedBooks.find(b => b.rank ===
+                rank); %>
+                <% if (book) { %>
+                <span class="book-badge completed" title="<%= book.username %>"><%= rank %></span>
+                <% } else { %>
+                <span class="book-badge placeholder"><%= rank %></span>
+                <% } %>
                 <% }) %>
               </div>
             </div>
           </div>
 
           <!-- Player Hand -->
-          <div class="player-area card <%= (typeof currentTurnUserId !== 'undefined' && currentTurnUserId === currentUserId) ? 'active-turn' : '' %>">
-            <%
-              const myPlayer = (typeof players !== 'undefined' && players)
-                ? players.find(p => p.user_id === currentUserId)
-                : null;
-              const myCardCount = (typeof myCards !== 'undefined' && myCards) ? myCards.length : 6;
-              const myBookCount = myPlayer ? myPlayer.book_count : 2;
-              const myUsername = myPlayer ? myPlayer.username : 'You';
-            %>
+          <div
+            class="player-area card <%= (typeof currentTurnUserId !== 'undefined' && currentTurnUserId === currentUserId) ? 'active-turn' : '' %>"
+          >
+            <% const myPlayer = (typeof players !== 'undefined' && players) ? players.find(p =>
+            p.user_id === currentUserId) : null; const myCardCount = (typeof myCards !== 'undefined'
+            && myCards) ? myCards.length : 6; const myBookCount = myPlayer ? myPlayer.book_count :
+            2; const myUsername = myPlayer ? myPlayer.username : 'You'; %>
             <h3>
-              <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= myUsername %>" alt="" class="player-avatar player-1" />
-              <%= myUsername %> (<%= myCardCount %> cards) • <%= myBookCount %> books
+              <img
+                src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= myUsername %>"
+                alt=""
+                class="player-avatar player-1"
+              />
+              <%= myUsername %>
+              (<%= myCardCount %>
+              cards) •
+              <%= myBookCount %>
+              books
               <% if (typeof currentTurnUserId !== 'undefined' && currentTurnUserId === currentUserId) { %>
-                <span class="turn-indicator">— Your Turn!</span>
+              <span class="turn-indicator">— Your Turn!</span>
               <% } %>
             </h3>
 
             <div class="player-hand">
               <% if (typeof myCards === 'undefined') { %>
-                <!-- PLACEHOLDER: Remove this if block after Section 2 wires up myCards -->
-                <div class="playing-card suit-H rank-A" data-rank="A"></div>
-                <div class="playing-card suit-D rank-5" data-rank="5"></div>
-                <div class="playing-card suit-C rank-5" data-rank="5"></div>
-                <div class="playing-card suit-S rank-J" data-rank="J"></div>
-                <div class="playing-card suit-H rank-Q" data-rank="Q"></div>
-                <div class="playing-card suit-D rank-2" data-rank="2"></div>
+              <!-- PLACEHOLDER: Remove this if block after Section 2 wires up myCards -->
+              <div class="playing-card suit-H rank-A" data-rank="A"></div>
+              <div class="playing-card suit-D rank-5" data-rank="5"></div>
+              <div class="playing-card suit-C rank-5" data-rank="5"></div>
+              <div class="playing-card suit-S rank-J" data-rank="J"></div>
+              <div class="playing-card suit-H rank-Q" data-rank="Q"></div>
+              <div class="playing-card suit-D rank-2" data-rank="2"></div>
               <% } else { %>
-                <!-- Real cards from data (empty if no cards yet) -->
-                <% myCards.forEach(card => { %>
-                  <div class="playing-card suit-<%= card.suit %> rank-<%= card.rank %>" data-rank="<%= card.rank %>" data-suit="<%= card.suit %>"></div>
-                <% }) %>
+              <!-- Real cards from data (empty if no cards yet) -->
+              <% myCards.forEach(card => { %>
+              <div
+                class="playing-card suit-<%= card.suit %> rank-<%= card.rank %>"
+                data-rank="<%= card.rank %>"
+                data-suit="<%= card.suit %>"
+              ></div>
+              <% }) %>
               <% } %>
             </div>
           </div>

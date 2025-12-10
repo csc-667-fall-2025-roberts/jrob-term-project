@@ -16,9 +16,7 @@
         </h1>
 
         <% if(locals.error) { %>
-        <div class="error-message">
-          <%= locals.error %>
-        </div>
+        <div class="error-message"><%= locals.error %></div>
         <% } %>
 
         <form method="post" action="/auth/login">

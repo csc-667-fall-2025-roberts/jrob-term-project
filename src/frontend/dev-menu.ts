@@ -159,11 +159,12 @@ function handleAction(action: string) {
       break;
 
     // Card selection
-    case "select-card":
+    case "select-card": {
       const cards = document.querySelectorAll(".player-hand .playing-card");
       const randomCard = cards[Math.floor(Math.random() * cards.length)];
       randomCard?.classList.add("selected");
       break;
+    }
     case "make-clickable":
       document.querySelectorAll(".opponent-card").forEach((opp) => opp.classList.add("clickable"));
       break;

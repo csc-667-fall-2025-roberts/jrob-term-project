@@ -60,4 +60,14 @@ const getPlayersWithStats = async (gameId: number): Promise<PlayerWithStats[]> =
   }));
 };
 
-export { create, get, getByUser, getPlayerIds, getPlayersWithStats, join, list, setPlayerPosition, start };
+export {
+  create,
+  get,
+  getByUser,
+  getPlayerIds,
+  getPlayersWithStats,
+  join,
+  list,
+  setPlayerPosition,
+  start,
+};

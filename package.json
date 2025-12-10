@@ -14,7 +14,10 @@
     "migrate:create": "node-pg-migrate create -j ts -- ",
     "migrate:up": "NODE_OPTIONS='--import tsx' node-pg-migrate up",
     "migrate:down": "NODE_OPTIONS='--import tsx' node-pg-migrate down",
-    "seed:dev": "npx tsx scripts/seed-dev.ts"
+    "seed:dev": "npx tsx scripts/seed-dev.ts",
+    "format": "prettier --write \"src/**/*.{ts,tsx,ejs,css}\"",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "fix": "npm run format && npm run lint"
   },
   "keywords": [],
   "author": "",

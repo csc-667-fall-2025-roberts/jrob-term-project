@@ -78,25 +78,59 @@
 }
 
 /* Rank symbols */
-.playing-card.rank-A::before { content: "A"; }
-.playing-card.rank-2::before { content: "2"; }
-.playing-card.rank-3::before { content: "3"; }
-.playing-card.rank-4::before { content: "4"; }
-.playing-card.rank-5::before { content: "5"; }
-.playing-card.rank-6::before { content: "6"; }
-.playing-card.rank-7::before { content: "7"; }
-.playing-card.rank-8::before { content: "8"; }
-.playing-card.rank-9::before { content: "9"; }
-.playing-card.rank-10::before { content: "10"; }
-.playing-card.rank-J::before { content: "J"; }
-.playing-card.rank-Q::before { content: "Q"; }
-.playing-card.rank-K::before { content: "K"; }
+.playing-card.rank-A::before {
+  content: "A";
+}
+.playing-card.rank-2::before {
+  content: "2";
+}
+.playing-card.rank-3::before {
+  content: "3";
+}
+.playing-card.rank-4::before {
+  content: "4";
+}
+.playing-card.rank-5::before {
+  content: "5";
+}
+.playing-card.rank-6::before {
+  content: "6";
+}
+.playing-card.rank-7::before {
+  content: "7";
+}
+.playing-card.rank-8::before {
+  content: "8";
+}
+.playing-card.rank-9::before {
+  content: "9";
+}
+.playing-card.rank-10::before {
+  content: "10";
+}
+.playing-card.rank-J::before {
+  content: "J";
+}
+.playing-card.rank-Q::before {
+  content: "Q";
+}
+.playing-card.rank-K::before {
+  content: "K";
+}
 
 /* Suit symbols - class names match DB values (H, D, C, S) */
-.playing-card.suit-H::after { content: "♥"; }
-.playing-card.suit-D::after { content: "♦"; }
-.playing-card.suit-C::after { content: "♣"; }
-.playing-card.suit-S::after { content: "♠"; }
+.playing-card.suit-H::after {
+  content: "♥";
+}
+.playing-card.suit-D::after {
+  content: "♦";
+}
+.playing-card.suit-C::after {
+  content: "♣";
+}
+.playing-card.suit-S::after {
+  content: "♠";
+}
 
 /* ==================== CARD INTERACTION STATES ==================== */
 

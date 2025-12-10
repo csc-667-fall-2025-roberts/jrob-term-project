@@ -16,9 +16,7 @@
         </h1>
 
         <% if(locals.error !== undefined) { %>
-        <div class="error-message">
-          <%= locals.error %>
-        </div>
+        <div class="error-message"><%= locals.error %></div>
         <% } %>
 
         <form method="post" action="/auth/signup">
@@ -39,9 +37,7 @@
 
           <button type="submit" class="btn-primary">Create Account</button>
 
-          <div class="form-footer">
-            Already have an account? <a href="/auth/login">Log in</a>
-          </div>
+          <div class="form-footer">Already have an account? <a href="/auth/login">Log in</a></div>
         </form>
       </div>
     </div>

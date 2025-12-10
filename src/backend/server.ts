@@ -17,6 +17,7 @@ configDotenv();
 // Set up livereload in development
 const isDevelopment = process.env.NODE_ENV !== "production";
 if (isDevelopment) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const livereload = require("livereload");
 
   const liveReloadServer = livereload.createServer({
@@ -36,6 +37,7 @@ const PORT = process.env.PORT || 3000;
 
 // Inject livereload script in development
 if (isDevelopment) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const connectLivereload = require("connect-livereload");
   app.use(connectLivereload());
 }
@@ -97,7 +99,7 @@ app.use((err: any, req: express.Request, res: express.Response, _next: express.N
   });
 });
 
-const server = httpServer.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   logger.info(`Server started on port ${PORT}`);
 });
 

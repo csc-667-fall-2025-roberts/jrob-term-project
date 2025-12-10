@@ -10,7 +10,7 @@
   color: #e2e8f0;
   border-radius: 8px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  font-family: 'Monaco', 'Menlo', monospace;
+  font-family: "Monaco", "Menlo", monospace;
   font-size: 12px;
   z-index: 9999;
   transition: all 0.3s ease;
@@ -140,7 +140,8 @@
 
 /* Pulse animation for dev menu to make it noticeable */
 @keyframes dev-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   }
   50% {

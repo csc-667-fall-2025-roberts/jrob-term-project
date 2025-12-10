@@ -10,7 +10,7 @@ const signup = async (username: string, email: string, clearTextPassword: string
 
   try {
     return await db.one<User>(SIGNUP, [username, email, password]);
-  } catch (e: any) {
+  } catch {
     throw "Email or username invalid";
   }
 };
@@ -26,7 +26,7 @@ const login = async (username: string, clearTextPassword: string) => {
     } else {
       throw "Invalid login information";
     }
-  } catch (e: any) {
+  } catch {
     throw "Invalid login information";
   }
 };

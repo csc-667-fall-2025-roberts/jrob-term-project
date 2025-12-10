@@ -17,7 +17,11 @@
         Go Fish
       </h1>
       <div class="header-user">
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= user.username %>" alt="" class="header-avatar" />
+        <img
+          src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=<%= user.username %>"
+          alt=""
+          class="header-avatar"
+        />
         <span class="header-username"><%= user.username %></span>
         <a href="/auth/logout" class="btn-link">Logout</a>
       </div>
